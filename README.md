@@ -35,6 +35,7 @@ This app can be deployed directly to heroku since there is a script defined in p
 #### `README` - This file!
 Anthony-test edit
 Gus Segovia edit
+Daniel Briz edit
 ## Available Scripts
 
 In the project directory, you can run:
