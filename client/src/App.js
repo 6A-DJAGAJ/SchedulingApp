@@ -5,12 +5,18 @@ import NotFound from "./views/NotFound"
 import Header from "./components/Header/Header"
 import './App.css';
 import Scheduler from "./components/Scheduler";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+//const express = require('../server/config/express.js')
+
 
 const App = () => {
   return (
-    <div>
-      <Scheduler/>
-    </div>
+      <div>
+        <Header/>
+        <Scheduler/>
+      </div>
+    
   );
 }
 

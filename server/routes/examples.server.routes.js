@@ -2,7 +2,7 @@ const examples = require('../controllers/examples.server.controller.js'),
     express = require('express'), 
     router = express.Router()
 
-router.route('/')
+router.route('/hello')
   .get(examples.hello);
   
 module.exports = router;
