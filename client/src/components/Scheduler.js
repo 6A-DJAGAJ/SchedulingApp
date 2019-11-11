@@ -110,7 +110,7 @@ class Scheduler extends Component {
                         //barColor: color,
                         //barBackColor: color
                       });
-                      console.log("Args.start is " + this.scheduler.events)
+                      //console.log("Args.start is " + this.state.event[0])
                     }); 
                   }}
                   

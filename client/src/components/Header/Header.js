@@ -18,7 +18,7 @@ const Header = () => {
                 <Nav.Link href="#link" style={{color:"white"}}>Schedule</Nav.Link>
                 <Nav.Link href="#link" style={{color:"white"}}>Tasks</Nav.Link>
                 <Nav.Link href="#link" style={{color:"white"}}>Messages</Nav.Link>
-                <Nav.Link href="#link" style={{color:"white"}}>Time Clock</Nav.Link>
+                <Nav.Link href="#link" style={{color:"white"}}>Timeclock Data</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
             </Navbar>
@@ -26,4 +26,5 @@ const Header = () => {
     )
 }
 
+//
 export default Header;

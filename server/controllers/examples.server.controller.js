@@ -1,7 +1,7 @@
 const Example = require('../models/examples.server.model.js')
 
 var mongoose = require('mongoose'), 
-    Users = require('./models/examples.server.model.js')
+    Users = require('../models/examples.server.model.js')
 
 exports.hello = function(req, res) {
     res.send('world')

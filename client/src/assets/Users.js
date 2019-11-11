@@ -14,28 +14,28 @@ export default [
         salary: 2
     },
     {
-        id: 3,
+        id_: 3,
         name: 'Jaxson Jaeger',
         email: 'jjaeger@ufl.edu',
         position: 'Programmer',
         salary: 2
     },
     {
-        id: 4,
+        id_: 4,
         name: 'Jason Sonder',
         email: 'json@ufl.edu',
         position: 'Programmer',
         salary: 2
     },
     {
-        id: 5,
+        id_: 5,
         name: 'Austin Pella',
         email: 'pelstin@ufl.edu',
         position: 'Programmer',
         salary: 2
     },
     {
-        id: 6,
+        id_: 6,
         name: 'Daniel Ribz',
         email: 'dribz@ufl.edu',
         position: 'Project Manager',
