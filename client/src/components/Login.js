@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {DayPilot, DayPilotScheduler} from "daypilot-pro-react";
 import Zoom from "./Zoom";
+import '../Login.css';
 
 class Login extends Component {
 
     render() {
         return (
-            <div class="text-center">
+            <div class="login-component text-center">
                 <form class="text-center">
                     <img class="mb-4" src="https://imprintgenius.com/wp-content/uploads/2018/08/logo.png" alt="Imprint genius" data-height-percentage="65" data-actual-width="176" data-actual-height="113" />
                     <h1 class="h3 mb-3">Employee login</h1>
