@@ -4,5 +4,14 @@ const examples = require('../controllers/examples.server.controller.js'),
 
 router.route('/hello')
   .get(examples.hello);
-  
+
+router.route('/')
+  .get(Users.list)
+  .post(Users.create);
+
+
+
+
+
+
 module.exports = router;

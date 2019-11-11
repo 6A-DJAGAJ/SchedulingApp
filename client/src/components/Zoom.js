@@ -4,6 +4,7 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class Zoom extends Component {
 
@@ -40,7 +41,7 @@ class Zoom extends Component {
             <div>
                 <Row noGutters style={{margin:"center", paddingBottom:"10px"}}>
             {/*<span className="toolbar-item">*/}
-                    
+                    <Col sm='8'>
                         <ToggleButtonGroup type="radio"  value={this.state.level} name="zoom" defaultValue={"month"} >
 
                             <ToggleButton value="month" 
@@ -59,8 +60,10 @@ class Zoom extends Component {
                             </ToggleButton>
 
                         </ToggleButtonGroup>
-                    
-                
+                    </Col>
+                    <Col sm='4'>
+                <button>Timeclock</button>
+                </Col>
             {/*</span>*/}
                 </Row>
             </div>
