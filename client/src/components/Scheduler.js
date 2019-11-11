@@ -7,8 +7,8 @@ class Scheduler extends Component {
         super(props);
 
         this.state = {
-            startDate: "2019-11-08",
-            days: 31,
+            startDate: DayPilot.Date.firstDayOfMonth,
+            days: DayPilot.Date.today().daysInMonth(),
             scale: "Day",
             timeHeaders: [
                 { groupBy: "Month"},
@@ -16,20 +16,41 @@ class Scheduler extends Component {
             ],
             cellWidthSpec: "Auto",
             cellWidth: 50,
-            resources: [],
+            resources: [{name: "Person A", id: "test1"}
+            ,{ name:"Person B", id: "test2"}],
             events: [],
-            rowCreateHandling: "Enabled",
+            //rowCreateHandling: "Enabled",
+            eventDeleteHandling: "Update",
         };
     }
    
 
     zoomChange(args) {
         switch (args.level) {
+            case "year":
+                this.setState({
+                    startDate: DayPilot.Date.today().firstDayOfMonth(),
+                    days: DayPilot.Date.today().daysInYear(),
+                    scale: "Day",
+                    timeHeaders: [
+                        { groupBy: "Year"},
+                        { groupBy: "Month"}
+                    ],
+                    cellWidthSpec: "Auto",
+                    cellWidth: 50,
+                });
+                break;
             case "month":
                 this.setState({
                     startDate: DayPilot.Date.today().firstDayOfMonth(),
                     days: DayPilot.Date.today().daysInMonth(),
-                    scale: "Day"
+                    scale: "Day",
+                    timeHeaders: [
+                        { groupBy: "Month"},
+                        { groupBy: "Day", format: "d"}
+                    ],
+                    cellWidthSpec: "Auto",
+                    cellWidth: 50,
                 });
                 break;
             case "week":
@@ -75,11 +96,8 @@ class Scheduler extends Component {
 
                 <div className="toolbar">
                     <Zoom onChange={args => this.zoomChange(args)} />
-                    
                 </div>
                 
-
-
 
                 <DayPilotScheduler
                   {...config}
@@ -97,25 +115,51 @@ class Scheduler extends Component {
                         start: args.start,
                         end: args.end,
                         resource: args.resource
-                        //barColor: color,
-                        //barBackColor: color
                       });
                     }); 
                   }}
-                  
-                    
-                  onRowCreate = {args =>{ 
-                        this.scheduler.rows.selection.add({
-                            id: DayPilot.guid(),
-                            name: args.text,
-                            start: DayPilot.Date,
-                            data: "test"
+                
+                     onEventClick = {args =>{
+                     //console.log(args.e.text); 
+                        DayPilot.Modal.prompt("Edit", "Event").then(modal => {
+                        args.e.text(modal.result);
+                        console.log(args.e.text);
+                        this.scheduler.events.update(args.e);
+                        this.scheduler.init();
                         });
-                    
+                        
                   }}
-                  onBeforeTimeHeaderRender = {args =>{ 
+
+               
+
+                  /*onBeforeTimeHeaderRender= {args =>{ 
+                    if(args.header.start.getYear() === 0){
+                         args.header.html = "<a href='http://google.com/'>" + "Year1" + "</a>";
+                    }
+                    else if(args.header.start.getYear() === 1){
+                         args.header.html = "<a href='http://google.com/'>" + "Year2" + "</a>";
+                    }
+                    else if(args.header.start.getYear() === 2){
+                         args.header.html = "<a href='http://google.com/'>" + "Year3" + "</a>";
+                    }
+                    else if(args.header.start.getYear() === 3){
+                         args.header.html = "<a href='http://google.com/'>" + "Year4" + "</a>";
+                    }
+                    else if(args.header.start.getYear() === 4){
+                         args.header.html = "<a href='http://google.com/'>" + "Year5" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 0){
+                          args.header.html = "<a href='http://google.com/'>" + "Month" + "</a>";
+                    }
+                    else if(args.header.start.getDayOfWeek() === 1){
+                         args.header.html = "<a href='http://google.com/'>" + "Monday" + "</a>";
+                    }
+                  }}*/
+
+                  /*onBeforeTimeHeaderRender = {args =>{ 
                          if(args.header.start.getDayOfWeek() === 0){
                             args.header.html = "Sun";
+                            args.header.html<a href="https://www.google.com">testing!</a>
                         }
                         if(args.header.start.getDayOfWeek() === 1){
                             args.header.html = "Mon";
@@ -134,9 +178,10 @@ class Scheduler extends Component {
                         }
                         if (args.header.start.getDayOfWeek() === 6) {
                             args.header.html = "Sat";
-                          }
-                       
-                  }}
+                          }                       
+                  }}*/
+
+
                   ref={component => { this.scheduler = component && component.control; }}
                 />
             </div>
