@@ -29,7 +29,7 @@ class Scheduler extends Component {
         switch (args.level) {
             case "year":
                 this.setState({
-                    startDate: DayPilot.Date.today().firstDayOfMonth(),
+                    startDate: DayPilot.Date.today().firstDayOfYear(),
                     days: DayPilot.Date.today().daysInYear(),
                     scale: "Day",
                     timeHeaders: [
@@ -150,6 +150,39 @@ class Scheduler extends Component {
                     }
                     else if(args.header.start.getMonth() === 0){
                           args.header.html = "<a href='http://google.com/'>" + "Month" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 1){
+                          args.header.html = "<a href='http://google.com/'>" + "Month2" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 2){
+                          args.header.html = "<a href='http://google.com/'>" + "Month3" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 3){
+                          args.header.html = "<a href='http://google.com/'>" + "Month4" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 4){
+                          args.header.html = "<a href='http://google.com/'>" + "Month5" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 5){
+                          args.header.html = "<a href='http://google.com/'>" + "Month6" + "</a>";
+                    }
+                      else if(args.header.start.getMonth() === 6){
+                          args.header.html = "<a href='http://google.com/'>" + "Month7" + "</a>";
+                    }
+                      else if(args.header.start.getMonth() === 7){
+                          args.header.html = "<a href='http://google.com/'>" + "Month8" + "</a>";
+                    }
+                      else if(args.header.start.getMonth() === 8){
+                          args.header.html = "<a href='http://google.com/'>" + "Month9" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 9){
+                          args.header.html = "<a href='http://google.com/'>" + "Month10" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 10){
+                          args.header.html = "<a href='http://google.com/'>" + "Month11" + "</a>";
+                    }
+                    else if(args.header.start.getMonth() === 11){
+                          args.header.html = "<a href='http://google.com/'>" + "Month12" + "</a>";
                     }
                     else if(args.header.start.getDayOfWeek() === 1){
                          args.header.html = "<a href='http://google.com/'>" + "Monday" + "</a>";
