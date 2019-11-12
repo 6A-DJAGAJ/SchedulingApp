@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NumPad from 'react-numpad';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 
 class PinInput extends Component {
 	render() {
@@ -14,7 +15,9 @@ class PinInput extends Component {
 				negative={false}
 				displayRule={displayRule}
 				>
-				<button>Clock in/Clock out</button>
+					<div class="float-right" style={{paddingRight:"10px"}}>
+						<Button >Clock in/Clock out</Button>
+					</div>
 				</NumPad.Number>
 			</div>
 			);

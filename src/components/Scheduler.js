@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {DayPilot, DayPilotScheduler} from "daypilot-pro-react";
 import Zoom from "./Zoom";
+import PinInput from "./PinInput"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class Scheduler extends Component {
     constructor(props) {
@@ -95,7 +99,15 @@ class Scheduler extends Component {
             <div>
 
                 <div className="toolbar">
-                    <Zoom onChange={args => this.zoomChange(args)} />
+                    <Row noGutters style={{margin:"center", paddingBottom:"10px", paddingLeft:"10px"}}>
+                        <Col>
+                            <Zoom onChange={args => this.zoomChange(args)} />
+                        </Col>
+                        <Col>
+                            <PinInput/>
+                        </Col>
+                        
+                    </Row>
                 </div>
                 
 
