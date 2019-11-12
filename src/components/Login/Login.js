@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {DayPilot, DayPilotScheduler} from "daypilot-pro-react";
-import Zoom from "./Zoom";
-import '../Login.css';
+import Zoom from "../Zoom";
+import './Login.css';
 
 class Login extends Component {
 

@@ -21,7 +21,9 @@ class Scheduler extends Component {
             cellWidthSpec: "Auto",
             cellWidth: 50,
             resources: [{name: "Person A", id: "test1"}
-            ,{ name:"Person B", id: "test2"}],
+            ,{ name:"Person B", id: "test2"},
+            {name: "Person C", id: "test3"}
+            ,{ name:"Person D", id: "test4"}],
             events: [],
             //rowCreateHandling: "Enabled",
             eventDeleteHandling: "Update",
