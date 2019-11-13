@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {DayPilot, DayPilotScheduler} from "daypilot-pro-react";
 import Zoom from "./Zoom";
 
+
+
 class Scheduler extends Component {
     constructor(props) {
         super(props);
@@ -16,13 +18,21 @@ class Scheduler extends Component {
             ],
             cellWidthSpec: "Auto",
             cellWidth: 50,
-            resources: [],
-            events: [],
-            rowCreateHandling: "Enabled",
+
+            resources: [
+                {name: "Name", id: "R1"},
+                {name: "person2", id: "R2"},
+                {name: "person3", id: "R3"},
+                {name: "person4", id: "R4"},
+                {name: "person5", id: "R5"},
+                //add list here of name & id
+            ],
+            events: []
+
         };
     }
    
-
+    
     zoomChange(args) {
         switch (args.level) {
             case "month":
@@ -33,6 +43,7 @@ class Scheduler extends Component {
                 });
                 break;
             case "week":
+                    
                 this.setState({
                     startDate: DayPilot.Date.today().firstDayOfWeek(),
                     days: 7,
@@ -100,6 +111,7 @@ class Scheduler extends Component {
                         //barColor: color,
                         //barBackColor: color
                       });
+                      //console.log("Args.start is " + this.state.event[0])
                     }); 
                   }}
                   
