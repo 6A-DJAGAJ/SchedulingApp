@@ -5,9 +5,6 @@ import Zoom from "./Zoom";
 
 
 class Scheduler extends Component {
-    //DayPilot.SchedulerPropsAndEvents.rowCreateHandling = "Enabled";
-    
-  
     constructor(props) {
         super(props);
 
@@ -21,6 +18,7 @@ class Scheduler extends Component {
             ],
             cellWidthSpec: "Auto",
             cellWidth: 50,
+
             resources: [
                 {name: "Name", id: "R1"},
                 {name: "person2", id: "R2"},
@@ -30,6 +28,7 @@ class Scheduler extends Component {
                 //add list here of name & id
             ],
             events: []
+
         };
     }
    
@@ -92,8 +91,10 @@ class Scheduler extends Component {
                 
 
 
+
                 <DayPilotScheduler
                   {...config}
+                  
                   
                   onTimeRangeSelected={args => {
                     DayPilot.Modal.prompt("New event name", "Event").then(modal => {
@@ -114,14 +115,39 @@ class Scheduler extends Component {
                     }); 
                   }}
                   
-                  onRowCreate = {args =>{
-                        throw "erre";
-                        DayPilot.modal.prompt("New Person", "Resource")
-                        DayPilot.Row.addClass("test");
-                        this.scheduler.resources.add({
+                    
+                  onRowCreate = {args =>{ 
+                        this.scheduler.rows.selection.add({
                             id: DayPilot.guid(),
-                            name: args.text
+                            name: args.text,
+                            start: DayPilot.Date,
+                            data: "test"
                         });
+                    
+                  }}
+                  onBeforeTimeHeaderRender = {args =>{ 
+                         if(args.header.start.getDayOfWeek() === 0){
+                            args.header.html = "Sun";
+                        }
+                        if(args.header.start.getDayOfWeek() === 1){
+                            args.header.html = "Mon";
+                        }
+                        if(args.header.start.getDayOfWeek() === 2){
+                            args.header.html = "Tue";
+                        }
+                        if(args.header.start.getDayOfWeek() === 3){
+                            args.header.html = "Wed";
+                        }
+                        if(args.header.start.getDayOfWeek() === 4){
+                            args.header.html = "Thu";
+                        }
+                        if(args.header.start.getDayOfWeek() === 5){
+                            args.header.html = "Fri";
+                        }
+                        if (args.header.start.getDayOfWeek() === 6) {
+                            args.header.html = "Sat";
+                          }
+                       
                   }}
                   ref={component => { this.scheduler = component && component.control; }}
                 />
