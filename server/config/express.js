@@ -37,7 +37,7 @@ module.exports.init = () => {
     app.use(bodyParser.json());
 
     // add a router
-    app.use('/user', userRouter);
+    app.use('/Users', userRouter);
     app.use('/uAvail', availRouter);
     app.use('/uNoAvail', noAvailRouter);
     app.use('/uPins', pinRouter);
