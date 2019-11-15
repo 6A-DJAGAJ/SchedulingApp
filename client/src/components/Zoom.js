@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 class Zoom extends Component {
 
@@ -40,12 +36,15 @@ class Zoom extends Component {
     render() {
         return (
             <div>
-                <Row noGutters style={{margin:"center", paddingBottom:"10px", paddingLeft:"10px"}}>
+                
             {/*<span className="toolbar-item">*/}
-                    <Col>
                         {/* can get the state using value={this.state.level}*/}
                         <ToggleButtonGroup type="radio"   name="zoom" defaultValue={"month"} >
 
+                             <ToggleButton value="year" 
+                            checked={this.state.level === "year"} onChange={ev => this.change(ev)}>
+                                Year
+                            </ToggleButton>
                             <ToggleButton value="month" 
                             checked={this.state.level === "month"} onChange={ev => this.change(ev)}>
                                 Month
@@ -62,12 +61,8 @@ class Zoom extends Component {
                             </ToggleButton>
 
                         </ToggleButtonGroup>
-                    </Col>
-                    <Col>
-                <div class="float-right" style={{paddingRight:"10px"}}><Button >Timeclock</Button></div>
-                </Col>
             {/*</span>*/}
-                </Row>
+                
             </div>
         );
     }
