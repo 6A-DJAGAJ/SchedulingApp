@@ -1,11 +1,15 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-  var pinSchema = new Schema({
-    pinNum: String
+  var timeCSchema = new Schema({
+    _id: Schema.Types.ObjectId,
+    clockInDate: Date,
+    clockInTime: String,
+    clockOutDate: Date,
+    clockOutDate: String
 });
 
-pinSchema.pre('save', function(next, err) {
+timeCSchema.pre('save', function(next, err) {
     if (!this.name){
       next(err);
     }
@@ -22,6 +26,6 @@ pinSchema.pre('save', function(next, err) {
 
 
 //model decides database, schema, collection
-var uPin = mongoose.model('uPins', pinSchema, 'uPins');
+var timeClock = mongoose.model('timeClock', timeCSchema, 'timeClock');
 
-module.exports = uPin;
+module.exports = timeClock;
