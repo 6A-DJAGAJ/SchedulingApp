@@ -3,10 +3,9 @@ var mongoose = require('mongoose'),
 
   var timeCSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    clockInDate: Date,
-    clockInTime: String,
-    clockOutDate: Date,
-    clockOutDate: String
+    clockIn: String,
+    clockOut: String,
+    boolClockedOut: Boolean
 });
 
 timeCSchema.pre('save', function(next, err) {
@@ -14,11 +13,7 @@ timeCSchema.pre('save', function(next, err) {
       next(err);
     }
     else{
-    var currentDate = new Date();
-    this.updated_at = currentDate;
-    if(!this.created_at)
-      this.created_at = currentDate;
-      next();
+      next()
     }
   });
 

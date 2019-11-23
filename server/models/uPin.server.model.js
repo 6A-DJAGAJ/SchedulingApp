@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
   var pinSchema = new Schema({
+    _id: String,
     pinNum: String
 });
 
