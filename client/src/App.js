@@ -7,6 +7,7 @@ import './App.css';
 import Scheduler from "./components/Scheduler";
 import Login from "./components/Login/Login";
 import { tsConstructorType } from '@babel/types';
+import ReportTable from "./components/ReportTable"
 
 
 
@@ -39,6 +40,10 @@ class App extends React.Component {
           break;
         case 'timedata':
           break;
+        case 'report':
+          this.setState({
+            appShow: <ReportTable/>
+          })
     }
   };
   render(){
