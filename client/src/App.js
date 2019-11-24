@@ -7,6 +7,7 @@ import './App.css';
 import Scheduler from "./components/Scheduler";
 import Login from "./components/Login/Login";
 import { tsConstructorType } from '@babel/types';
+import PinInput from './components/PinInput';
 
 
 
@@ -16,6 +17,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      //Fix back to dashboard
       appShow:<Login/>,
       show:'dash'
     }
@@ -25,17 +27,27 @@ class App extends React.Component {
     switch(show){
         case 'dash':
           this.setState({
-            appShow: <Login/>
+            appShow: <Login/>,
+            show: show
           })
           break;
         case 'schedule':
           this.setState({
-            appShow: <Scheduler/>
+            appShow: <Scheduler/>,
+            show: show
           })
           break;
         case 'tasks':
           break;
         case 'messages':
+          break;
+        case 'timedata':
+          break;
+        case 'timeclock':
+            this.setState({
+              appShow: <PinInput/>,
+              show: show
+            })
           break;
         case 'timedata':
           break;
