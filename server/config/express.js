@@ -18,7 +18,7 @@ module.exports.init = () => {
     try {
         mongoose.connect(config.dbUserData.uri, { useNewUrlParser: true, useUnifiedTopology: true });
         mongoose.set('useCreateIndex', true);
-        mongoose.set('useFindAndModify', true);
+        mongoose.set('useFindAndModify', false);
         console.log('Successfully connected to Users db')
         }
     catch (err){

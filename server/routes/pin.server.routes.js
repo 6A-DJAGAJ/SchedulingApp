@@ -1,16 +1,18 @@
-const Users = require('../controllers/pin.server.controller'),
+const uPins = require('../controllers/pin.server.controller'),
     express = require('express'), 
     router = express.Router();
 
 
 router.route('/list')
-  .get(Users.list);
-  //.post(Users.create);
+  .get(uPins.list);
 
-router.route('/findPin/:pinNum')
-  .get(Users.read);
+router.route('/clockIn/:pinNumIn')
+  .get(uPins.read);
+router.route('/clockOut/:pinNumOut')
+  .get(uPins.read);
 
-router.param('pinNum', Users.findPin)
+router.param('pinNumIn', uPins.clockIn)
+router.param('pinNumOut', uPins.clockOut)
 
 //router.param('User', Users.list);
 
