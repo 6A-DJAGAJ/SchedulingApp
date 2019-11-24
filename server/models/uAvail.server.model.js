@@ -3,10 +3,9 @@ var mongoose = require('mongoose'),
 
 
   var availSchema = new Schema({
-    dateStart: Date,
-    dateEnd: Date,
-    timeStart: String,
-    timeEnd: String,
+    employeeID: String,
+    start: String, //use moment.js
+    end: String,
 });
 
 availSchema.pre('save', function(next, err) {

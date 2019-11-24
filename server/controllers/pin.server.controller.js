@@ -34,10 +34,10 @@ try{
 
     exports.read = function(req,res){
       if (req.params.pinNumIn !== null){
-        res.json(req.pinNumIn)
+        res.json(req.params.pinNumIn)
       }
       else if (req.params.pinNumOut !== null){
-        res.json(req.pinNumOut)
+        res.json(req.params.pinNumOut)
       }
     };
 
@@ -46,18 +46,31 @@ try{
 //####################### Clock  In #######################//
 //#######################           #######################//
     
-    var resStatus = {"name":null,"clockedIn":false};
+    //############################################//
+    var resStatus = {"name":null,"clockedIn":false, "status":0};
+    //Status codes:
+    // 0 = nothing has happened yet
+    // 1 = successfully clocked in
+    // 10 = found user, already clocked in
+    // 11 = successfully clocked out
+    // 33 = found user, nowhere to clock out
+    // 404 = error, no user found
+    // 911 = there was an error
+    //############################################//
     exports.clockIn = async function(req, res) {
       var oldPin = "";
 
       uPin.findOne({pinNum:req.params.pinNumIn})
       .exec(async function (err, user) {
         //console.log(req.params.pinNumIn);
-        if (err) return console.error(err);
-        if (user===null){
+        if (err){ 
+          resStatus.status = 911;
+          return console.error(err);
+        }
+        else if (user===null){
           console.log("Pin " + req.params.pinNumIn + " not found.")
           //respond with {name,clockedIn:bool}
-          res.json({"name":null,"clockedIn":false});
+          res.json({"name":null,"clockedIn":false, "status":404});
         }
         else{
           let waitResStatus = new Promise((resolve,rej)=>{
@@ -71,7 +84,7 @@ try{
                 clockPinIn(user._id); //prep name
               }
               resolve()
-            }, 100);
+            }, 50);
           });
           let sendResStatus = new Promise((resolve,rej)=>{
             
@@ -97,11 +110,13 @@ try{
         'boolClockedOut', function(err, todayClockOut){
         if (err){
           console.log("Find timeClocks error: " + err)
+          resStatus.status = 911;
         }
         else if (todayClockOut !== null) {
           //user needs to clock out before clocking in again
           
           console.log(resStatus.name + " has not clocked out")
+          resStatus.status = 10;
           resStatus.clockedIn = true;
         }
         else{
@@ -117,10 +132,12 @@ try{
           //console.log(newTimeClock)
           newTimeClock.save(function (err,entry){
               if (err) {
+                resStatus.status = 911;
                 console.error("Create error: " + err);
               }
               else{
                 console.log("Success! Entry Added: " + entry._id)
+                resStatus.status = 1;
                 resStatus.clockedIn = true;
                 
               }
@@ -144,11 +161,15 @@ exports.clockOut = async function(req, res) {
       uPin.findOne({pinNum:req.params.pinNumOut})
       .exec(async function (err, user) {
         //console.log(req.params.pinNumOut);
-        if (err) return console.error(err);
-        if (user===null){
+        if (err){ 
+          console.error(err);
+          resStatus.status = 911;
+        }
+        else if (user===null){
           console.log("Pin " + req.params.pinNumOut + " not found.")
           //respond with {name,clockedIn:bool}
-          res.json({"name":null,"clockedIn":null});
+          res.json({"name":null,"clockedIn":null,"status":404});
+          resStatus.status = 404;
         }
         else{
           let waitResStatus = new Promise((resolve,rej)=>{
@@ -188,12 +209,14 @@ exports.clockOut = async function(req, res) {
         function(err, todayClockOut){
         if (err){
           console.log("Find timeClocks error: " + err)
+          resStatus.status = 911;
         }
         else if (todayClockOut === null) {
           //user needs to clock out before clocking in again
           
           console.log(resStatus.name + " has clocked out")
           resStatus.clockedIn = false;
+          resStatus.status = 33;
         }
         else{
           //create new data in db showing a user has clocked in
@@ -209,10 +232,12 @@ exports.clockOut = async function(req, res) {
             newTimeClock, function (err,entry){
               if (err) {
                 console.error("Update error: " + err);
+                resStatus.status = 911;
               }
               else{
                 console.log("Updated entry: " + entry._id)
                 resStatus.clockedIn = false;
+                resStatus.status = 11;
                 
               }
           })
@@ -237,6 +262,7 @@ exports.clockOut = async function(req, res) {
       function (err, userName) {
         if (err) {
           console.error("Could not getName:" + err)
+          resStatus.status = 404;
         }
         else {
           resStatus.name = userName.name;
