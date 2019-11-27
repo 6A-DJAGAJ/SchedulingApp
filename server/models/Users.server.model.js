@@ -9,7 +9,7 @@ var userSchema = new Schema({
     salary: Number
 });
 
-userSchema.pre('save', function(next, err) {
+/* userSchema.pre('save', function(next, err) {
     if (!this.name){
       next(err);
     }
@@ -20,7 +20,7 @@ userSchema.pre('save', function(next, err) {
       this.created_at = currentDate;
       next();
     }
-  });
+  }); */
 
 
 
