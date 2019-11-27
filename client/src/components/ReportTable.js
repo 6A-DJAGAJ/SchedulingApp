@@ -1,74 +1,86 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
-
 
 class ReportTable extends Component {
-    sortTable(table, col, reverse) {
-        var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
-            tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
-            i;
-        reverse = -((+reverse) || -1);
-        tr = tr.sort(function (a, b) { // sort rows
-            return reverse // `-1 *` if want opposite order
-                * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
-                    .localeCompare(b.cells[col].textContent.trim())
-                   );
-        });
-        for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
-    }
-    render(){
-        return(
-            <table id="Reports" class="table sortable">
-                <thead>
-                    <tr>
-                        <th class="th-sm">First Name</th>
-                        <th class="th-sm">Last Name</th>
-                        <th class="th-sm">Time Cards</th>
-                        <th class="th-sm">Issues</th>
-                        <th class="th-sm">Role</th>
-                        <th class="th-sm">Total Paid</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Person</td>
-                        <td>A</td>
-                        <td>placeholder</td>
-                        <td>placeholder</td>
-                        <td>employee</td>
-                        <td>$10</td>
-                    </tr>
-                    <tr>
-                        <td>Person</td>
-                        <td>B</td>
-                        <td>placeholder</td>
-                        <td>placeholder</td>
-                        <td>employee</td>
-                        <td>$12</td>
-                    </tr>
-                    <tr>
-                        <td>Person</td>
-                        <td>C</td>
-                        <td>placeholder</td>
-                        <td>placeholder</td>
-                        <td>employee</td>
-                        <td>$8</td>
-                    </tr>
-                    <tr>
-                        <td>Person</td>
-                        <td>D</td>
-                        <td>placeholder</td>
-                        <td>placeholder</td>
-                        <td>employee</td>
-                        <td>$16</td>
-                    </tr>
-                </tbody>
-            </table>
-        );
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			employees: [
+            { id: 1, Name: 'Person D', ClockIn: 3, ClockOut: 5, Issues: "Late", Role: 'Employee', TotalPaid: 1000},
+            { id: 2, Name: 'Person B', ClockIn: 2, ClockOut: 8, Issues: "Lazy", Role: 'Manager', TotalPaid: 1025},
+            { id: 3, Name: 'Person A', ClockIn: 5, ClockOut: 7, Issues: "Rude", Role: 'CEO', TotalPaid: 3000},
+            { id: 4, Name: 'Person C', ClockIn: 6, clockOut: 12, Issues: "Skips work", Role: 'Intern', TotalPaid: 1500}
+         ],
+			orientation: 'default'
+      }
+   }
+   renderTableHeader() {
+	   let header = Object.keys(this.state.employees[0])
+	   header = header.slice(1);
+	   return header.map((key,index) => {
+		 return <th key={index} onClick={e => this.onSort(e, {key})}>{key}</th>
+   })
 }
-
+   renderTableData() {
+	   return this.state.employees.map((employee, index) => {
+		   const {id, Name, ClockIn, ClockOut, Issues, Role, TotalPaid} = employee
+		   return (
+		   <tr key={id}>
+				<td>{Name}</td>
+				<td>{ClockIn}</td>
+				<td>{ClockOut}</td>
+				<td>{Issues}</td>
+				<td>{Role}</td>
+				<td>{TotalPaid}</td>
+			</tr>
+			)
+	   })
+	}
+	
+	onSort(event, sortBase){
+	const data = this.state.employees;
+	if(sortBase.key === 'Name' || sortBase.key === 'Issues' || sortBase.key === 'Issues' || sortBase.key === 'Role')
+	{
+		data.sort(function(a,b) {
+			var stringA = a[sortBase.key].toUpperCase();
+			var stringB = b[sortBase.key].toUpperCase();
+			if (stringA < stringB){
+				return -1;
+			}
+			if (stringA > stringB){
+				return 1;
+			}
+			return 0;
+		})
+		this.setState({data})
+	}
+	else
+	{
+		data.sort(function(a,b) {
+			return a[sortBase.key] - b[sortBase.key];
+			
+	})
+	this.setState({data})
+	
+}
+	}
+		
+		
+	
+   render(){
+	   const employees = this.state.employees;
+	   return(
+	   <div>
+			<table class="table table-bordered table-sm sortable">
+				<thead class="thead-dark">
+				{this.renderTableHeader()}
+				</thead>
+				<tbody>
+				{this.renderTableData()}
+				</tbody>
+			</table>
+		</div>
+	   )
+   }
+}
 export default ReportTable;

@@ -7,7 +7,7 @@ import './App.css';
 import Scheduler from "./components/Scheduler";
 import Login from "./components/Login/Login";
 import { tsConstructorType } from '@babel/types';
-import ReportTable from "./components/ReportTable"
+import ReportTable from "./components/ReportTable";
 
 
 
@@ -17,7 +17,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      appShow:<Login/>,
+      appShow:<ReportTable/>, //Change back to "Login"
       show:'dash'
     }
   }
@@ -44,6 +44,7 @@ class App extends React.Component {
           this.setState({
             appShow: <ReportTable/>
           })
+          break;
     }
   };
   render(){
@@ -56,7 +57,7 @@ class App extends React.Component {
 
         {this.state.appShow}
 
-        <ReportTable/>
+      
       </div>
     );
   }
