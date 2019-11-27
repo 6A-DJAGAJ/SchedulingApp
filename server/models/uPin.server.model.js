@@ -2,11 +2,13 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
   var pinSchema = new Schema({
-    _id: String,
+    _id: Schema.Types.ObjectId,
     pinNum: String
 });
 
-pinSchema.pre('save', function(next, err) {
+
+//will not work if this code is uncommented
+/* pinSchema.pre('save', function(next, err) {
     if (!this.name){
       next(err);
     }
@@ -17,7 +19,7 @@ pinSchema.pre('save', function(next, err) {
       this.created_at = currentDate;
       next();
     }
-  });
+  }); */
 
 
 

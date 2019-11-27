@@ -1,12 +1,25 @@
-const Users = require('../controllers/avail.server.controller'),
+const avail = require('../controllers/avail.server.controller'),
     express = require('express'), 
     router = express.Router();
 
 
-router.route('/list')
-  .get(Users.list);
-  //.post(Users.create);
+router.route('/create')
+  .post(avail.create)
 
-//router.param('User', Users.list);
+router.route('/update')
+  .post(avail.updateAvail)
 
+router.route('/delete')
+  .delete(avail.deleteAvail)
+
+router.route('/:listBy/')
+  .get(avail.listBy);
+
+/* router.route('/listByWeek/:employeeID')
+  .get(avail.listByWeek);
+
+router.route('/listByWeek/:employeeID')
+  .get(avail.listByWeek); */
+
+router.param('listBy',avail.listBy)
 module.exports = router;
