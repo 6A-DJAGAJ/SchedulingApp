@@ -13,11 +13,11 @@ import PinInput from './components/PinInput';
 
 
 
+
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      //Fix back to dashboard
       appShow:<Login/>,
       show:'dash'
     }
@@ -48,8 +48,6 @@ class App extends React.Component {
               appShow: <PinInput/>,
               show: show
             })
-          break;
-        case 'timedata':
           break;
     }
   };

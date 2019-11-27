@@ -4,7 +4,8 @@ const uPins = require('../controllers/pin.server.controller'),
 
 
 router.route('/list')
-  .get(uPins.list);
+  .get(uPins.list)
+  .delete(uPins.delete);
 
 router.route('/clockIn/:pinNumIn')
   .get(uPins.read);

@@ -3,8 +3,8 @@ const Users = require('../controllers/user.server.controller'),
     router = express.Router();
 
 
-router.route('/list')
-  .get(Users.list);
+router.route('/delete')
+  .delete(Users.delete);
   //.post(Users.create);
 
 //router.param('User', Users.list);

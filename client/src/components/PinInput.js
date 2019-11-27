@@ -130,6 +130,11 @@ class PinInput extends Component {
 			 marginLeft:'23.5%',
 			 marginTop:'8%',
 		 }
+
+		 const clearbutton={
+			 marginLeft:'68.5%',
+			 marginTop:'1%'
+		 }
 			 
         return (
 		<div style={bigone}>
@@ -159,7 +164,7 @@ class PinInput extends Component {
 			<div style={displayBox}>
 			<p>{this.PrintList()}</p>
 			</div>
-			<button style onClick={() => this.clearLog()}>Clear</button>
+			<button style ={clearbutton} class="btn btn-sm btn-secondary" onClick={() => this.clearLog()}>Clear</button>
 		</div>
 				
 			);

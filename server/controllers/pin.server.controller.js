@@ -14,7 +14,7 @@ try{
       var pin = new uPin(req.body);
      
       /* Then save the User */
-      uPin.save(function(err) {
+      pin.save(function(err) {
         if(err) {
           console.log(err);
           res.status(400).send(err);
@@ -40,6 +40,12 @@ try{
         res.json(req.params.pinNumOut)
       }
     };
+
+    exports.delete = function(req, res) {
+      Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
+        res.send(document);
+      })
+    }
 
 
 //#######################           #######################//

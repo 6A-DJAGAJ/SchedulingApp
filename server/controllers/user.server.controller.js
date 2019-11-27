@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose'), 
     Users = require('../models/Users.server.model.js')
+    uPins = require('../controllers/pin.server.controller.js')
 
 /* Create a listing */
 try{
@@ -28,6 +29,12 @@ try{
         res.send(users);
       }); //add sorted functionality
     };
+    exports.delete = function(req, res) {
+      Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
+        res.send(document);
+      })
+    }
+    
 }
 catch(err){
     console.log(err);
