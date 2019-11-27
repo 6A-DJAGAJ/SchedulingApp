@@ -5,11 +5,11 @@ var mongoose = require('mongoose'),
 
   var noAvailSchema = new Schema({
     employeeID: String,
-    start: String, //use moment.js
-    end: String,
+    start: Date, //use moment.js
+    end: Date,
 });
 
-noAvailSchema.pre('save', function(next, err) {
+/* noAvailSchema.pre('save', function(next, err) {
     if (!this.name){
       next(err);
     }
@@ -20,7 +20,7 @@ noAvailSchema.pre('save', function(next, err) {
       this.created_at = currentDate;
       next();
     }
-  });
+  }); */
 
 
 

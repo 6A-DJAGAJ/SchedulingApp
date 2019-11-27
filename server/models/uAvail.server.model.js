@@ -4,11 +4,11 @@ var mongoose = require('mongoose'),
 
   var availSchema = new Schema({
     employeeID: String,
-    start: String, //use moment.js
-    end: String,
+    start: Date, //use moment.js
+    end: Date,
 });
 
-availSchema.pre('save', function(next, err) {
+/* availSchema.pre('save', function(next, err) {
     if (!this.name){
       next(err);
     }
@@ -19,7 +19,7 @@ availSchema.pre('save', function(next, err) {
       this.created_at = currentDate;
       next();
     }
-  });
+  }); */
 
 
 
