@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import NumPad from 'react-numpad';
 import axios from 'axios';
-import { monoBlue } from 'react-syntax-highlighter/dist/styles/hljs';
 //<button>Clock in/Clock out</button>
 //</NumPad.Number>
 class PinInput extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
+		fromServer : [],
 		logString: "no logs",
 		messages: []
 	}

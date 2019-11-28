@@ -13,7 +13,6 @@ import PinInput from './components/PinInput';
 
 
 
-
 class App extends React.Component {
   constructor(props){
     super(props);
