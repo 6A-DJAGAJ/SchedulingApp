@@ -105,10 +105,6 @@ class Scheduler extends Component {
                         <Col>
                             <Zoom onChange={args => this.zoomChange(args)} />
                         </Col>
-                        <Col>
-                            <PinInput/>
-                        </Col>
-                        
                     </Row>
                 </div>
                 

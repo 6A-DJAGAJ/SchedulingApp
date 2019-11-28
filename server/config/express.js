@@ -4,47 +4,25 @@ const path = require('path'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     config = require('./config'),
-    exampleRouter = require('../routes/examples.server.routes');
+    userRouter = require('../routes/user.server.routes');
+    availRouter = require('../routes/avail.server.routes');
+    noAvailRouter = require('../routes/noAvail.server.routes');
+    pinRouter = require('../routes/pin.server.routes');
 
 module.exports.init = () => {
     /* 
         connect to database
         - reference README for db uri
     */
-   // Attempt connecting to mongoose database collections
+   // Attempt connecting to mongoose database userData (selects all collections inside)
     try {
-        mongoose.connect(config.dbUsers.uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        mongoose.connect(config.dbUserData.uri, { useNewUrlParser: true, useUnifiedTopology: true });
         mongoose.set('useCreateIndex', true);
         mongoose.set('useFindAndModify', false);
+        console.log('Successfully connected to Users db')
         }
     catch (err){
         console.log("Could not retrieve database Users")
-    }
-    try {
-        mongoose.connect(config.dbuAvail.uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        mongoose.set('useCreateIndex', true);
-        mongoose.set('useFindAndModify', false);
-    }
-    catch (err){
-        console.log("Could not retrieve database uAvail")
-    }
-
-    try {
-        mongoose.connect(config.dbuNoAvail.uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        mongoose.set('useCreateIndex', true);
-        mongoose.set('useFindAndModify', false);
-    }
-    catch (err){
-        console.log("Could not retrieve database uNoAvail")
-    }
-
-    try {
-        mongoose.connect(config.dbuPins.uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        mongoose.set('useCreateIndex', true);
-        mongoose.set('useFindAndModify', false);
-    }
-    catch (err){
-        console.log("Could not retrieve database uPins")
     }
     // end try to connect to db collections
 
@@ -59,7 +37,10 @@ module.exports.init = () => {
     app.use(bodyParser.json());
 
     // add a router
-    app.use('/api/example', exampleRouter);
+    app.use('/Users', userRouter);
+    app.use('/uAvail', availRouter);
+    app.use('/uNoAvail', noAvailRouter);
+    app.use('/uPins', pinRouter);
 
    // if (process.env.NODE_ENV === 'production') {
         // Serve any static files
