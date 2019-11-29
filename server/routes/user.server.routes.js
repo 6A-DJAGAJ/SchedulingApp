@@ -7,6 +7,9 @@ router.route('/delete')
   .delete(Users.delete);
   //.post(Users.create);
 
+router.route('/list')
+  .get(Users.list)
+
 //router.param('User', Users.list);
 
 module.exports = router;
