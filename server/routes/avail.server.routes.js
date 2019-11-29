@@ -12,8 +12,10 @@ router.route('/update')
 router.route('/delete')
   .delete(avail.deleteAvail)
 
+//axios does not allow data to be sent during a get method
+// changed to post
 router.route('/:listBy/')
-  .get(avail.listBy);
+  .post(avail.listBy);
 
 /* router.route('/listByWeek/:employeeID')
   .get(avail.listByWeek);

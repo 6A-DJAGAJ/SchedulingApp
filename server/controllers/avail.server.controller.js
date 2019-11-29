@@ -17,7 +17,7 @@ try{
 
     create avail
       - creates on sending info to req.body
-      ex. localhost:5000/uAvail/update/
+      ex. localhost:5000/uAvail/create/
       req.body = {
         employeeID: (string)
         start: (moment||Date)
@@ -65,6 +65,7 @@ try{
     
       /* Instantiate a User */
       var avail = new uAvail(req.body);
+      
       /* Must be in form
         {
           employeeID: (String)
@@ -152,7 +153,7 @@ try{
             //gte represents starting date and lte is ending date
             //query finds the range from start to finish using 
             // date objects of the moments
-              uAvail.find({employeeID: req.body.employeeID, start:{'$gte':new Date(start), '$lte': new Date(end)}},
+              uAvail.find({employeeID: req.body.employeeID, start:{'$gte':start, '$lte': end}},
               null, null, function (err, avail) {
                 if (err) res.status(400).send(err);
                 else{
