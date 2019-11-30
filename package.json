@@ -21,15 +21,26 @@
   "author": "Dakota Rennemann",
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^4.1.0",
-    "nodemon": "^1.18.10",
+    "axios": "^0.19.0",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
+    "concurrently": "^4.1.2",
+    "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2018.2.3297.tar.gz",
     "express": "^4.17.1",
+    "format": "^0.2.2",
+    "mocha": "^6.2.1",
+    "moment": "^2.24.0",
+    "mongo": "^0.1.0",
     "mongoose": "^5.7.1",
     "morgan": "^1.9.1",
+    "nodemon": "^1.18.10",
+    "react": "^16.11.0",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-numpad": "^5.0.4",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.2.0",
     "should": "^13.2.3",
-    "supertest": "^4.0.2",
-    "mocha": "^6.2.1"
+    "supertest": "^4.0.2"
   },
   "homepage": "https://github.com/UFWebApps/React_Template_Repo#readme"
 }

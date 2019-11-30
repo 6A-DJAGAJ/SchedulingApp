@@ -1,3 +1,10 @@
+.nav-colors:hover {
+    color: #cccccc !important;
+  }
+.nav-colors {
+    color:gray !important; 
+}
+
 
 #wrapper {
     display: grid;

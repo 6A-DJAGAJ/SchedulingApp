@@ -1,31 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import { tsConstructorType } from '@babel/types';
 
-const Header = () => {
+class Header extends React.Component {
+    updatePage(val){
+        //const pageVal = this.pageChange
+        this.props.updatePage(val)
+        console.log(val)
+    }
+
+    render(){
     return (
-        <div className='topnav'>
-            {/* Logo */}
-            <Link id="logo-link" to="/">
-                <img className="topnav-logo" src={ "/logo192.png" } alt="React logo" />
-            </Link>
-
-            {/* Page Links */}
-            <div className="topnav-right">
-                <Link className="topnav-link" to='/Register'>Sign in</Link>
-                <Link className="topnav-link" to='/projects'>Projects</Link>
-                <a className="topnav-link" target='_blank' rel="noopener noreferrer" href="https://www.facebook.com/groups/ufosc/events/?source=4&action_history=null&filter=calendar">
-                    Events
-                    <i className="fas fa-external-link-alt external-link" data-fa-transform="up-6"></i>
-                </a>
-                <a className="topnav-link" target='_blank' rel="noopener noreferrer" href="https://github.com/ufosc/club-resources">
-                    Resources
-                    <i className="fas fa-external-link-alt external-link" data-fa-transform="up-6 right-4"></i>
-                </a>
-                <Link className="topnav-link" to="/about">About</Link>
-            </div>
+        <div style={{paddingBottom:"10px"}}>
+            <Navbar className="bg-dark" expand="lg">
+            <Navbar.Brand style={{color:"white"}}>SchedulingApp</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                <Nav.Link href="#dash" className="nav-colors" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
+                <Nav.Link href="#schedule" className="nav-colors" onClick={() => this.updatePage('schedule')}>Schedule</Nav.Link>
+                <Nav.Link href="#tasks" className="nav-colors">Tasks</Nav.Link>
+                <Nav.Link href="#timeclock" className="nav-colors" onClick={() => this.updatePage('timeclock')}>Timeclock</Nav.Link>
+                <Nav.Link href="#timedata" className="nav-colors">Timeclock Data</Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+            </Navbar>
         </div>
     )
+    }
 }
 
+//
 export default Header;

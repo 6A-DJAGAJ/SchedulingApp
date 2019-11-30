@@ -1,8 +1,11 @@
-const examples = require('../controllers/examples.server.controller.js'),
+const Users = require('../controllers/examples.server.controller.js'),
     express = require('express'), 
     router = express.Router()
 
+
 router.route('/')
-  .get(examples.hello);
-  
+  //.get(Users.list)
+  .post(Users.create);
+
+
 module.exports = router;
