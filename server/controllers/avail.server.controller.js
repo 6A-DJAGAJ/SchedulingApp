@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     uAvail = require('../models/uAvail.server.model.js')
     Users = require('../models/Users.server.model.js')
 
-/* Create a listing */
+
 try{
 /*
 
@@ -29,6 +29,7 @@ try{
       //to keep consistency, using body
       req.body = {
         employeeID: (string)
+        dayRange: moment().subtract(1,'month').format()
       }
 
 
@@ -63,7 +64,7 @@ try{
 
     exports.create = function(req, res) {
     
-      /* Instantiate a User */
+      /* Instantiate an event */
       var avail = new uAvail(req.body);
       
       /* Must be in form
@@ -133,8 +134,9 @@ try{
        localhost:5000/uAvail/month/
       req.body = {
         employeeID: (string)
+        dayRange: moment().subtract(1,'month')
       } */
-
+      
       //Need to take all 
       var start;
       var end;
@@ -147,8 +149,17 @@ try{
             || req.params.listBy === 'month' 
             || req.params.listBy === 'week'
             || req.params.listBy === 'day'){
-              start = moment().startOf(req.params.listBy).format();
-              end = moment().endOf(req.params.listBy).format();
+              if (req.body.dayRange !== null){
+                start = moment(req.body.dayRange)
+                  .startOf(req.params.listBy).format();
+                end = moment(req.body.dayRange)
+                  .endOf(req.params.listBy).format();
+                //console.log(moment().subtract(1,'month').format());
+              }
+              else {
+                start = moment().startOf(req.params.listBy).format();
+                end = moment().endOf(req.params.listBy).format();
+              }
 
             //gte represents starting date and lte is ending date
             //query finds the range from start to finish using 
