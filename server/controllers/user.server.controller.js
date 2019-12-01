@@ -28,6 +28,19 @@ try{
         res.send(users);
       }); //add sorted functionality
     };
+
+    exports.validate = function(req, res) {
+      Users.findOne({email : req})
+      .exec(function (err, user) {
+        if (err) {
+          return callback(err);
+        } else if (!user) {
+          console.log('User could not be found');
+        } else {
+          console.log('User found');
+        }
+      });
+    };
 }
 catch(err){
     console.log(err);
