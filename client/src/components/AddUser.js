@@ -11,22 +11,7 @@ class addUser extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //var ObjectID = require('mongodb').ObjectID;
-    //var objectId = new ObjectID();
-    // Send data to the server or update your stores and such.
-    /*
-  axios.post('http://localhost:3000/Users/', {
-    _id: 'ObjectId("5dc9dd891c9d440000f92743")',
-    name: "John Doe",//this.name,
-    email: "JD@test.com",//this.email,
-    position: "CEO",//this.position,
-    salary: "100"//this.salary
-  });
-  alert("User created");
-  */
 
-
- 
  axios({
   method:'post',
   url:'http://localhost:3000/Users/create',
@@ -59,6 +44,7 @@ class addUser extends Component {
                     <input type="password" id="inputPassword" class="form-control" placeholder="Password" />
                     <label for="inputPosition" class="sr-only">Position</label>
                     <select id="inputPosition">
+                      <option value="">Please select one</option>
                       <option value="Director of Communications">Director of Communications</option>
                       <option value="CEO">CEO</option>
                       <option value="Director of Sales">Director of Sales</option>
