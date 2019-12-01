@@ -3,7 +3,6 @@ const path = require('path'),
     mongoose = require('mongoose'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
-    config = require('./config'),
     userRouter = require('../routes/user.server.routes');
     availRouter = require('../routes/avail.server.routes');
     noAvailRouter = require('../routes/noAvail.server.routes');
