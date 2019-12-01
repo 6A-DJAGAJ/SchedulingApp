@@ -51,7 +51,7 @@ try{
     };
 
     exports.validate = function(req, res) {
-      Users.findOne({email : req})
+      Users.findOne({email : req.params.email})
       .exec(function (err, user) {
         if (err) {
           return callback(err);
@@ -59,6 +59,8 @@ try{
           console.log('User could not be found');
         } else {
           console.log('User found');
+          // Check for matching password
+          
         }
       });
     };
