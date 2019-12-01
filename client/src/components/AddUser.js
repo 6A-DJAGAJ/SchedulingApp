@@ -28,7 +28,8 @@ if (document.getElementById("inputName").value === "" ||
   document.getElementById("inputEmail").value === "" ||
   document.getElementById("inputPosition").value === "" ||
   document.getElementById("inputSalary").value === "" ||
-  document.getElementById("inputPassword").value === "") {
+  document.getElementById("inputPassword").value === "" ||
+  document.getElementById("inputPin").value === "") {
     this.setState({
       display: true,
       modalText:"Error: New User Could Not Be Created! Values Cannot be Empty!"
@@ -47,10 +48,70 @@ if (document.getElementById("inputName").value === "" ||
 })
 .then(res => {
   console.log(res.data);
-  this.setState({
-    display: true,
-    modalText:"New User Created!"
+
+  axios({
+    method:'get',
+    url:'http://localhost:3000/Users/list'
+  })
+  .then(res => {
+    var id = "";
+    for (var i = 0; i < res.data.length; i++) {
+      if(res.data[i].name === document.getElementById("inputName").value) {
+        id = res.data[i]._id;
+      }
+  }
+  //shouldn't happen ever
+  if(id === "") {
+    this.setState({
+      display: true,
+      modalText:"Error: User Not Deleted! Name Not Found"
   });
+document.getElementById("inputName").value = "";
+document.getElementById("inputEmail").value = "";
+document.getElementById("inputPosition").value = "";
+document.getElementById("inputSalary").value = "";
+document.getElementById("inputPassword").value = "";
+document.getElementById("inputPin").value = "";
+  } else {
+    console.log(id);
+    axios({
+      method:'post',
+      url:'http://localhost:3000/uPins/create',
+      data:{
+        '_id': id,//'ObjectId("'+id+'")',
+        'pinNum': document.getElementById("inputPin").value
+      }
+    })
+    .then(res => {
+      console.log(res.data);
+      this.setState({
+        display: true,
+        modalText:"New User Successfully Created!"
+    });
+    })
+    .catch(function (error) {
+      console.log(error);
+      this.setState({
+        display: true,
+        modalText:"Error: User Could Not Be Created (Pin Issue)!"
+  });
+    })
+  }
+document.getElementById("inputName").value = "";
+document.getElementById("inputEmail").value = "";
+document.getElementById("inputPosition").value = "";
+document.getElementById("inputSalary").value = "";
+document.getElementById("inputPassword").value = "";
+document.getElementById("inputPin").value = "";
+  })
+  .catch(function (error) {
+    console.log(error);
+    this.setState({
+      display: true,
+      modalText:"Error: User Could Not Be Created (error listing users)!"
+  });
+  });
+
 })
 .catch(function (error) {
   console.log(error);
@@ -62,13 +123,6 @@ if (document.getElementById("inputName").value === "" ||
 
 }
 
-
-
-document.getElementById("inputName").value = "";
-document.getElementById("inputEmail").value = "";
-document.getElementById("inputPosition").value = "";
-document.getElementById("inputSalary").value = "";
-document.getElementById("inputPassword").value = "";
 
 }
 
@@ -94,6 +148,8 @@ document.getElementById("inputPassword").value = "";
                     <input type="email" id="inputEmail" class="form-control" placeholder="Email@domain" />
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" id="inputPassword" class="form-control" placeholder="Password" />
+                    <label for="inputPin" class="sr-only">Pin</label>
+                    <input type="password" id="inputPin" class="form-control" placeholder="Pin" />
                     <label for="inputPosition" class="sr-only">Position</label>
                     <select id="inputPosition">
                       <option value="">Please select one</option>

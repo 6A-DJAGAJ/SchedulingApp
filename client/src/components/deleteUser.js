@@ -64,16 +64,33 @@ document.getElementById("inputName").value = "";
   })
   .then(res => {
     console.log(res.data);
-    this.setState({
-      display: true,
-      modalText:"User Successfully Deleted!"
+    axios({
+      method:'delete',
+      url:'http://localhost:3000/uPins/delete',
+      data:{
+        '_id': id
+      }
+    })
+    .then(res => {
+      this.setState({
+        display: true,
+        modalText:"User Successfully Deleted!"
   });
+    })
+    .catch(function (error) {
+      console.log(error);
+      this.setState({
+        display: true,
+        modalText:"Error: User Could Not Be Deleted!(Pin issue)"
+  });
+    })
+
   })
   .catch(function (error) {
     console.log(error);
     this.setState({
       display: true,
-      modalText:"Error: User Could Not Be Deleted!"
+      modalText:"Error: User Could Not Be Deleted!(User issue)"
 });
   })
   document.getElementById("inputName").value = "";
