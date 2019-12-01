@@ -66,7 +66,9 @@ try{
     };
 
     exports.validate = function(req, res) {
-      Users.findOne({email : req.params.email})
+      console.log('checking username: ', req.body.formEmail);
+      console.log('checking passwrod: ', req.body.formPassword);
+      Users.findOne({email : req.body.formEmail})
       .exec(function (err, user) {
         if (err) {
           return callback(err);
@@ -75,7 +77,7 @@ try{
         } else {
           console.log('User found');
           // Check for matching password
-          bcrypt.compare(req.params.password, user.password, function (err, result) {
+          bcrypt.compare(req.body.formPassword, user.password, function (err, result) {
             if (result) {
               console.log('Correct password');
             } else {

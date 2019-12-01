@@ -7,8 +7,8 @@ const Users = require('../controllers/user.server.controller'),
 router.route('/list')
   .get(Users.list);
 
-// Testing purposes
-router.get('/login/:email/:password', function (req, res, next) {
+// Checks info and logs user in
+router.post('/login', function (req, res, next) {
   Users.validate(req, res);
   next();
 });
