@@ -42,17 +42,6 @@ try{
           }
         });
       });
-
-      /* Then save the User */
-      // user.save(function(err) {
-      //   if(err) {
-      //     console.log(err);
-      //     res.status(400).send(err);
-      //   } else {
-      //     res.json(user);
-      //     console.log(user)
-      //   }
-      // });
     };
 
     // use url localhost:3000/Users/list/
@@ -65,9 +54,8 @@ try{
       }).sort('name');
     };
 
+    // Compares form email and password to database
     exports.validate = function(req, res) {
-      console.log('checking username: ', req.body.formEmail);
-      console.log('checking passwrod: ', req.body.formPassword);
       Users.findOne({email : req.body.formEmail})
       .exec(function (err, user) {
         if (err) {
@@ -87,6 +75,7 @@ try{
         }
       });
     };
+    
     exports.delete = function(req, res) {
       Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
         res.send(document);
