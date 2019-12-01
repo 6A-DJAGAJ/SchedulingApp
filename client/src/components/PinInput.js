@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import NumPad from 'react-numpad';
 import axios from 'axios';
-import { monoBlue } from 'react-syntax-highlighter/dist/styles/hljs';
-//<button>Clock in/Clock out</button>
-//</NumPad.Number>
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 class PinInput extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
+		fromServer : [],
 		logString: "no logs",
-		messages: []
+		messages: [],
+		display : false,
+		modalText: "",
+		curName:""
 	}
 }
 
@@ -48,15 +52,35 @@ class PinInput extends Component {
 				{
 					case 1:
 						log = `${fromServer.name} clocked in at ${d}`;
+						this.setState({
+							display: true,
+							modalText:"You clocked in!",
+							curName:fromServer.name.split(" ")
+						})
 					break;
 					case 10:
 						log = "Already clocked in";
+						this.setState({
+							display: true,
+							modalText:"You are already clocked in!",
+							curName:fromServer.name.split(" ")
+						})
 					break;
 					case 11:
 						log = `${fromServer.name} clocked out at ${d}`;
+						this.setState({
+							display: true,
+							modalText:"You clocked out!",
+							curName:fromServer.name.split(" ")
+						})
 					break;
 					case 33:
 						log = "Not clocked in";
+						this.setState({
+							display: true,
+							modalText:"You are not clocked in yet!",
+							curName:fromServer.name.split(" ")
+						})
 					break;
 					case 404:
 						log = "User not found";
@@ -66,7 +90,7 @@ class PinInput extends Component {
 						console.log("911, what's your emergency?")
 					break;
 				}
-				messages.push(log);
+				messages.unshift(log);
 				this.setState({messages});
 			})
 		 }
@@ -86,6 +110,14 @@ class PinInput extends Component {
 			</ul>
 			)
 	}
+	
+	handleClose = () => {
+		var display = this.state.display
+			display = false;
+			this.setState({display})
+	}
+
+		
 				
 	
 	render() {
@@ -130,9 +162,25 @@ class PinInput extends Component {
 			 marginLeft:'23.5%',
 			 marginTop:'8%',
 		 }
+
+		 const clearbutton={
+			 marginLeft:'68.5%',
+			 marginTop:'1%'
+		 }
 			 
         return (
 		<div style={bigone}>
+			<Modal show={this.state.display} onHide={this.handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Hello, {this.state.curName[0]}</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>{this.state.modalText}</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={this.handleClose}>
+						Close
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<div style={clockin}>
                 <NumPad.Number
 				onChange= {(value) => this.OnChange(value,'clockIn')}
@@ -159,7 +207,7 @@ class PinInput extends Component {
 			<div style={displayBox}>
 			<p>{this.PrintList()}</p>
 			</div>
-			<button style onClick={() => this.clearLog()}>Clear</button>
+			<button style ={clearbutton} class="btn btn-sm btn-secondary" onClick={() => this.clearLog()}>Clear</button>
 		</div>
 				
 			);
