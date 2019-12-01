@@ -1,7 +1,6 @@
 
 var mongoose = require('mongoose'), 
-    Users = require('../models/Users.server.model.js')
-    uPins = require('../controllers/pin.server.controller.js')
+    Positions = require('../models/position.server.model.js')
 
 
 try{    
@@ -25,29 +24,29 @@ try{
     });  */
     exports.create = function(req, res) {
     
-      /* Instantiate a User */
-      var user = new Users(req.body);
+      /* Instantiate a Position */
+      var position = new Positions(req.body);
      
       /* Then save the User */
-      user.save(function(err) {
+      position.save(function(err) {
         if(err) {
           console.log(err);
           res.status(400).send(err);
         } else {
-          res.json(user);
-          console.log(user)
+          res.json(position);
+          console.log(position)
         }
       });
     };
 
-    // use url localhost:3000/Users/list/
+    // use url localhost:3000/positions/list/
     exports.list = function(req, res) {
       //only sends _id and name (scheduler use)
-      Users.find({}, '_id name', null, function (err, users) {
+      Positions.find({}, '_id Position', null, function (err, positions) {
         if (err) return handleError(err);
-        console.log("calling all users" + users);
-        res.send(users);
-      }).sort('name');
+        console.log("calling all positions" + positions);
+        res.send(positions);
+      }).sort('Position');
     };
     exports.delete = function(req, res) {
       Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
