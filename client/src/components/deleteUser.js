@@ -37,7 +37,47 @@ if (document.getElementById("inputName").value === "") {
 })
 .then(res => {
   console.log(res.data);
- 
+  console.log("input");
+  console.log(document.getElementById("inputName").value);
+  console.log(res.data[0].name);
+  console.log(res.data[0]._id);
+  var id = "";
+  for (var i = 0; i < res.data.length; i++) {
+    if(res.data[i].name === document.getElementById("inputName").value) {
+      id = res.data[i]._id;
+      console.log(res.data[i]._id);
+    }
+}
+if(id === "") {
+  this.setState({
+    display: true,
+    modalText:"Error: User Not Deleted! Name Not Found"
+});
+document.getElementById("inputName").value = "";
+} else {
+  axios({
+    method:'delete',
+    url:'http://localhost:3000/Users/delete',
+    data:{
+      '_id': id
+    }
+  })
+  .then(res => {
+    console.log(res.data);
+    this.setState({
+      display: true,
+      modalText:"User Successfully Deleted!"
+  });
+  })
+  .catch(function (error) {
+    console.log(error);
+    this.setState({
+      display: true,
+      modalText:"Error: User Could Not Be Deleted!"
+});
+  })
+  document.getElementById("inputName").value = "";
+}
 })
 .catch(function (error) {
   console.log(error);
@@ -48,8 +88,6 @@ if (document.getElementById("inputName").value === "") {
 });
 
 }
-
-document.getElementById("inputName").value = "";
 
 }
 
