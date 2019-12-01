@@ -25,20 +25,34 @@ try{
       console.log(error);
     });  */
     exports.create = function(req, res) {
-    
+
       /* Instantiate a User */
       var user = new Users(req.body);
-     
-      /* Then save the User */
-      user.save(function(err) {
-        if(err) {
-          console.log(err);
-          res.status(400).send(err);
-        } else {
-          res.json(user);
-          console.log(user)
-        }
+
+      // Hash the password and save to database
+      bcrypt.hash(user.password, 10).then(function(hash) {
+        user.password = hash;
+        user.save(function(err) {
+          if(err) {
+            console.log(err);
+            res.status(400).send(err);
+          } else {
+            res.json(user);
+            console.log(user)
+          }
+        });
       });
+
+      /* Then save the User */
+      // user.save(function(err) {
+      //   if(err) {
+      //     console.log(err);
+      //     res.status(400).send(err);
+      //   } else {
+      //     res.json(user);
+      //     console.log(user)
+      //   }
+      // });
     };
 
     // use url localhost:3000/Users/list/
