@@ -5,7 +5,9 @@ const Users = require('../controllers/user.server.controller'),
 
 router.route('/delete')
   .delete(Users.delete);
-  //.post(Users.create);
+
+router.route('/create')
+  .post(Users.create);
 
 router.route('/list')
   .get(Users.list)
