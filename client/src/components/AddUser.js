@@ -69,6 +69,7 @@ if (document.getElementById("inputName").value === "" ||
   data:{
     'name': document.getElementById("inputName").value,
     'email': document.getElementById("inputEmail").value,
+    'password': document.getElementById("inputPassword").value,
     'position': document.getElementById("inputPosition").value,
     'salary': document.getElementById("inputSalary").value
   }
