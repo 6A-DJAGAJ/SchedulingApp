@@ -1,16 +1,39 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import './addUser.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class addUser extends Component {
 
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      display : false,
+      modalText: ""
+    };
   }
+
+  handleClose = () => {
+		var display = this.state.display
+			display = false;
+			this.setState({display});
+	}
 
   handleSubmit(event) {
     event.preventDefault();
+
+if (document.getElementById("inputName").value === "" ||
+  document.getElementById("inputEmail").value === "" ||
+  document.getElementById("inputPosition").value === "" ||
+  document.getElementById("inputSalary").value === "" ||
+  document.getElementById("inputPassword").value === "") {
+    this.setState({
+      display: true,
+      modalText:"Error: New User Could Not Be Created! Values Cannot be Empty!"
+  });
+  } else {
 
  axios({
   method:'post',
@@ -24,16 +47,45 @@ class addUser extends Component {
 })
 .then(res => {
   console.log(res.data);
+  this.setState({
+    display: true,
+    modalText:"New User Created!"
+  });
 })
 .catch(function (error) {
   console.log(error);
+  this.setState({
+    display: true,
+    modalText:"Error: New User Could Not Be Created!"
 });
+});
+
 }
 
+
+
+document.getElementById("inputName").value = "";
+document.getElementById("inputEmail").value = "";
+document.getElementById("inputPosition").value = "";
+document.getElementById("inputSalary").value = "";
+document.getElementById("inputPassword").value = "";
+
+}
 
     render() {
         return (
             <div class="add-user-component">
+              <Modal show={this.state.display} onHide={this.handleClose}>
+				        <Modal.Header closeButton>
+					        <Modal.Title>Hello</Modal.Title>
+				        </Modal.Header>
+				        <Modal.Body>{this.state.modalText}</Modal.Body>
+				        <Modal.Footer>
+					        <Button variant="secondary" onClick={this.handleClose}>
+						        Close
+					        </Button>
+				        </Modal.Footer>
+			          </Modal>
                 <form class="text-center" name="user" onSubmit={this.handleSubmit}>
                 <h1 class="h3 mb-3">New User</h1>
                     <label for="inputName" class="sr-only">Name</label>
