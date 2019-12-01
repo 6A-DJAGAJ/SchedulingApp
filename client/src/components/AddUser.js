@@ -13,6 +13,33 @@ class addUser extends Component {
       display : false,
       modalText: ""
     };
+    this.pos = [];
+    this.options = "";
+    axios({
+      method:'get',
+      url:'http://localhost:3000/positions/list'
+    })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+      for (var i = 0; i < res.data.length; i++) {
+        this.pos[i] = res.data[i].Position;
+        console.log(this.pos[i]);
+    }
+      var select = document.getElementById("inputPosition"); 
+
+      for(var i = 0; i < this.pos.length; i++) {
+          var opt = this.pos[i];
+          var el = document.createElement("option");
+          el.textContent = opt;
+          el.value = opt;
+          select.appendChild(el);
+    }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
   }
 
   handleClose = () => {
@@ -153,9 +180,6 @@ document.getElementById("inputPin").value = "";
                     <label for="inputPosition" class="sr-only">Position</label>
                     <select id="inputPosition">
                       <option value="">Please select one</option>
-                      <option value="Director of Communications">Director of Communications</option>
-                      <option value="CEO">CEO</option>
-                      <option value="Director of Sales">Director of Sales</option>
                     </select>
                     <label for="inputSalary" class="sr-only">Salary</label>
                     <input type="text" id="inputSalary" class="form-control" placeholder="Salary" />
@@ -167,30 +191,3 @@ document.getElementById("inputPin").value = "";
 }
 
 export default addUser;
-/*{
-  data() {
-    return {
-      user: {
-        name: '',
-        email: '',
-        password: '',
-        position: '',
-        salary: ''
-      }
-    }
-  },
-
-  methods: {
-    handleSubmit() {
-      // Send data to the server or update your stores and such.
-      axios.post('http://localhost:3000/Users/', {
-        name: this.name,
-        email: this.email,
-        position: this.position,
-        salary: this.salary
-      });
-    alert("User created");
-    }
-  }
-}
-  */
