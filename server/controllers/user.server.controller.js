@@ -1,5 +1,6 @@
 
 var mongoose = require('mongoose'), 
+    bcrypt = require('bcryptjs')
     Users = require('../models/Users.server.model.js')
     uPins = require('../controllers/pin.server.controller.js')
 
@@ -60,7 +61,13 @@ try{
         } else {
           console.log('User found');
           // Check for matching password
-          
+          bcrypt.compare(req.params.password, user.password, function (err, result) {
+            if (result) {
+              console.log('Correct password');
+            } else {
+              console.log('Incorrect password');
+            }
+          })
         }
       });
     };
