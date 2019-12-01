@@ -25,8 +25,9 @@ class Header extends React.Component {
                 <Nav.Link href="#schedule" className="nav-colors" onClick={() => this.updatePage('schedule')}>Schedule</Nav.Link>
                 <Nav.Link href="#tasks" className="nav-colors">Tasks</Nav.Link>
                 <Nav.Link href="#timeclock" className="nav-colors" onClick={() => this.updatePage('timeclock')}>Timeclock</Nav.Link>
-                <Nav.Link href="#addUsers" className="nav-colors" onClick={() => this.updatePage('addUsers')}>AddUser</Nav.Link>
                 <Nav.Link href="#timedata" className="nav-colors">Timeclock Data</Nav.Link>
+                <Nav.Link href="#addUsers" className="nav-colors" onClick={() => this.updatePage('addUsers')}>Add User</Nav.Link>
+                <Nav.Link href="#deleteUsers" className="nav-colors" onClick={() => this.updatePage('deleteUsers')}>Delete User</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
             </Navbar>
