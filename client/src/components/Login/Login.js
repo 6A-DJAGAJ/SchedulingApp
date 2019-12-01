@@ -27,7 +27,7 @@ class Login extends Component {
                 if (res.status === 202) {
                     document.getElementById("errorText").innerText = "Invalid username or password";
                 } else {
-                    document.getElementById("errorText").innerText = "";
+                    document.getElementById("errorText").innerText = "Logged in";
                 }
             })
         }
