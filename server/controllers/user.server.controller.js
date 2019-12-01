@@ -49,12 +49,25 @@ try{
         res.send(users);
       }).sort('name');
     };
+
+    exports.validate = function(req, res) {
+      Users.findOne({email : req})
+      .exec(function (err, user) {
+        if (err) {
+          return callback(err);
+        } else if (!user) {
+          console.log('User could not be found');
+        } else {
+          console.log('User found');
+        }
+      });
+    };
     exports.delete = function(req, res) {
       Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
         res.send(document);
       })
     }
-    
+
 }
 catch(err){
     console.log(err);
