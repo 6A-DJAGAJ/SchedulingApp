@@ -8,6 +8,7 @@ const path = require('path'),
     availRouter = require('../routes/avail.server.routes');
     noAvailRouter = require('../routes/noAvail.server.routes');
     pinRouter = require('../routes/pin.server.routes');
+    positionsRouter = require('../routes/position.server.routes');
 
 module.exports.init = () => {
     /* 
@@ -16,7 +17,7 @@ module.exports.init = () => {
     */
    // Attempt connecting to mongoose database userData (selects all collections inside)
     try {
-        mongoose.connect(config.dbUserData.uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         mongoose.set('useCreateIndex', true);
         mongoose.set('useFindAndModify', false);
         console.log('Successfully connected to Users db')
@@ -41,6 +42,7 @@ module.exports.init = () => {
     app.use('/uAvail', availRouter);
     app.use('/uNoAvail', noAvailRouter);
     app.use('/uPins', pinRouter);
+    app.use('/positions', positionsRouter);
 
    // if (process.env.NODE_ENV === 'production') {
         // Serve any static files
