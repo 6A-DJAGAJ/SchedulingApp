@@ -5,7 +5,11 @@ const Users = require('../controllers/user.server.controller'),
 
 router.route('/list')
   .get(Users.list);
-  //.post(Users.create);
+
+router.get('/login/:email', function (req, res, next) {
+  Users.validate(req.params.email, res);
+  next();
+});
 
 //router.param('User', Users.list);
 
