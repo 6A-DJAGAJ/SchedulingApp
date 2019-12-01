@@ -15,7 +15,9 @@ router.get('/login/:email/:password', function (req, res, next) {
 
 router.route('/delete')
   .delete(Users.delete);
-  //.post(Users.create);
+
+router.route('/create')
+  .post(Users.create);
 
 
 router.route('/list')

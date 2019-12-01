@@ -30,7 +30,7 @@ try{
       var user = new Users(req.body);
      
       /* Then save the User */
-      Users.save(function(err) {
+      user.save(function(err) {
         if(err) {
           console.log(err);
           res.status(400).send(err);
