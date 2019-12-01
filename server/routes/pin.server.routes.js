@@ -10,6 +10,9 @@ const uPins = require('../controllers/pin.server.controller'),
   localhost:3000/clockIn/3737
 */
 
+router.route('/create')
+  .post(uPins.create)
+
 router.route('/list')
   .get(uPins.list)
 
