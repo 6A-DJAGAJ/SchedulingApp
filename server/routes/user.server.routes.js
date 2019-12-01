@@ -8,9 +8,8 @@ router.route('/list')
   .get(Users.list);
 
 // Checks info and logs user in
-router.post('/login', function (req, res, next) {
+router.post('/login', function (req, res) {
   Users.validate(req, res);
-  next();
 });
 
 router.route('/delete')

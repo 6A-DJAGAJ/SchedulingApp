@@ -61,21 +61,20 @@ try{
         if (err) {
           return callback(err);
         } else if (!user) {
-          console.log('User could not be found');
+          res.status(202).send('User not found');
         } else {
-          console.log('User found');
           // Check for matching password
           bcrypt.compare(req.body.formPassword, user.password, function (err, result) {
             if (result) {
-              console.log('Correct password');
+              res.status(200).send('User found');
             } else {
-              console.log('Incorrect password');
+              res.status(202).send('Incorrect password');
             }
           })
         }
       });
     };
-    
+
     exports.delete = function(req, res) {
       Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
         res.send(document);
