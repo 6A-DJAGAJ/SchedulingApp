@@ -30,11 +30,10 @@ module.exports.init = () => {
 
 
     // initialize app
-    const app = express(
-        app.use(session({
-            'secret': 'secretstring'
-        }))
-    );
+    const app = express()
+    app.use(session({
+        'secret': 'secretstring'
+    }))
 
     // enable request logging for development debugging
     app.use(morgan('dev'));

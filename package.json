@@ -28,6 +28,7 @@
     "concurrently": "^4.1.2",
     "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2018.2.3297.tar.gz",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "format": "^0.2.2",
     "mocha": "^6.2.1",
     "moment": "^2.24.0",
@@ -42,7 +43,7 @@
     "react-scripts": "^3.2.0",
     "should": "^13.2.3",
     "supertest": "^4.0.2",
-    "webpack": "^4.40.2"
+    "webpack": "^4.41.0"
   },
   "homepage": "https://github.com/UFWebApps/React_Template_Repo#readme"
 }
