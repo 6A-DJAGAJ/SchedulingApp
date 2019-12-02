@@ -6,9 +6,9 @@ class ReportTable extends Component {
 		super(props)
 		this.state = {
 			employees: [
-            { id: 1, Name: 'Person D', ClockIn: new Date('Sat Nov 30 2019 15:34:26').toString(), ClockOut: new Date().toString(), Issues: "Late", Role: 'Employee', TotalPaid: 1000},
+            { id: 1, Name: 'Person D', ClockIn: new Date('Sat Nov 30 2019 15:34:26').toString(), ClockOut: new Date('Sat Nov 30 2019 20:30:00').toString(), Issues: "Late", Role: 'Employee', TotalPaid: 1000},
             { id: 2, Name: 'Person B', ClockIn: new Date('Fri Nov 29 2019 12:00:00').toString(), ClockOut: new Date('Fri Nov 29 2019 16:00:00').toString(), Issues: "Lazy", Role: 'Manager', TotalPaid: 1025},
-            { id: 3, Name: 'Person A', ClockIn: new Date('Sun Dec 1 2019 14:00:00').toString(), ClockOut: new Date('Sun Dec 1 2019 20:00:00').toString(), Issues: "Rude", Role: 'CEO', TotalPaid: 3000},
+            { id: 3, Name: 'Person A', ClockIn: new Date('Mon Dec 2 2019 14:00:00').toString(), ClockOut: new Date('Mon Dec 2 2019 20:00:00').toString(), Issues: "Rude", Role: 'CEO', TotalPaid: 3000},
             { id: 4, Name: 'Person C', ClockIn: new Date('Wed Nov 6 2019 8:00:00').toString(), ClockOut: new Date('Wed Nov 6 2019 22:00:00').toString(), Issues: "Skips work", Role: 'Intern', TotalPaid: 1500}
          ],
 			orientation: 'default'
@@ -23,22 +23,44 @@ class ReportTable extends Component {
    })
 }
 
+dates = (current) => {
+	var week= new Array(); 
+	// Starting Monday not Sunday
+	current.setDate((current.getDate() - current.getDay() +1));
+	for (var i = 0; i < 7; i++) {
+		week.push(
+
+			new Date(current)
+		); 
+		current.setDate(current.getDate() +1);
+	}
+	return week; 
+}
+
    renderTableData() {
 	   return this.state.employees.map((employee, index) => {
 		   const {id, Name, ClockIn, ClockOut, Issues, Role, TotalPaid} = employee
-  			return (
+		   var current = new Date();
+		   var dates = this.dates(current);
+		   
+		   for(var i = 0; i < dates.length; i++){
+			if(dates[i].toString().slice(0,15) === ClockIn.toString().slice(0,15)){
+				return (
+						<tr key={id}>
+						<td>{Name}</td>
+						<td>{ClockIn}</td>
+						<td>{ClockOut}</td>
+						<td>{Issues}</td>
+						<td>{Role}</td>
+						<td>${TotalPaid}</td>
+					</tr>
+					)
 
-		   <tr key={id}>
-				<td>{Name}</td>
-				<td>{ClockIn}</td>
-				<td>{ClockOut}</td>
-				<td>{Issues}</td>
-				<td>{Role}</td>
-				<td>${TotalPaid}</td>
-			</tr>
-			)
-	   })
-	}
+			}
+		}  
+				
+	})
+}
 	
 	onSort(event, sortBase){
 		const data = this.state.employees;
@@ -79,7 +101,6 @@ class ReportTable extends Component {
 		}
 	}
 		
-	
    render(){
 	   const employees = this.state.employees;
 
