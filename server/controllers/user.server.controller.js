@@ -42,7 +42,7 @@ try{
           }
         });
       });
-    };
+    }; 
 
     // use url localhost:3000/Users/list/
     exports.list = function(req, res) {
@@ -77,6 +77,12 @@ try{
 
     exports.delete = function(req, res) {
       Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
+        res.send(document);
+      })
+    }
+
+    exports.update = function(req, res) {
+      Users.findOneAndUpdate({'_id' : req.body._id}, req.body.changes, function(err,document){
         res.send(document);
       })
     }

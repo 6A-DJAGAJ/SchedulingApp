@@ -24,6 +24,9 @@ router.route('/clockIn/:pinNumIn')
 router.route('/clockOut/:pinNumOut')
   .get(uPins.read);
 
+router.route('/update')
+  .put(uPins.update);
+
 
 //paramaters are sent to the exported functions
 router.param('pinNumIn', uPins.clockIn)

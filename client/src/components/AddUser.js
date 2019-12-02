@@ -28,7 +28,7 @@ class addUser extends Component {
     }
       var select = document.getElementById("inputPosition"); 
 
-      for(var i = 0; i < this.pos.length; i++) {
+      for(i = 0; i < this.pos.length; i++) {
           var opt = this.pos[i];
           var el = document.createElement("option");
           el.textContent = opt;
@@ -61,7 +61,7 @@ if (document.getElementById("inputName").value === "" ||
       display: true,
       modalText:"Error: New User Could Not Be Created! Values Cannot be Empty!"
   });
-  } else {
+  } else { 
 
  axios({
   method:'post',
