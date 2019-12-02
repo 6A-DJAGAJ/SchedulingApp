@@ -180,7 +180,7 @@ document.getElementById("inputPin").value = "";
                     <input type="password" id="inputPin" class="form-control" placeholder="Pin" />
                     <label for="inputPosition" class="sr-only">Position</label>
                     <select id="inputPosition">
-                      <option value="">Please select one</option>
+                      <option value="">Position: Please select one</option>
                     </select>
                     <label for="inputSalary" class="sr-only">Salary</label>
                     <input type="text" id="inputSalary" class="form-control" placeholder="Salary" />
