@@ -19,7 +19,7 @@ class editUser extends Component {
       this.ids = [];
       axios({
         method:'get',
-        url:'http://localhost:3000/Users/list'
+        url:'/Users/list'
       })
       .then(res => {
         for (var i = 0; i < res.data.length; i++) {
@@ -46,7 +46,7 @@ class editUser extends Component {
     this.pos = [];
     axios({
       method:'get',
-      url:'http://localhost:3000/positions/list'
+      url:'/positions/list'
     })
     .then(res => {
       for (var i = 0; i < res.data.length; i++) {
@@ -94,6 +94,24 @@ class editUser extends Component {
       modalText:"Error: User Could Not Be Updated, No Values Changed!"
   });
         } else {
+          var pinCheck = "false";
+    axios({
+      method:'get',
+      url:'/uPins/list'
+    })
+    .then(res => {
+      for (var i = 0; i < res.data.length; i++) {
+        if(document.getElementById("newPin").value === res.data[i].pinNum) {
+          pinCheck = "true";
+        }
+      }
+      if(pinCheck === "true") {
+        this.setState({
+          display: true,
+          modalText:"Pin Already In Use! Please Enter Different Pin!"
+      });
+      }
+      else {
         var userChange;
         var userEdits = "{ ";
         var pw = document.getElementById("newPassword").value;
@@ -129,7 +147,7 @@ class editUser extends Component {
             if(document.getElementById("newPin").value !== "") {
                 axios({
                     method:'put',
-                    url:'http://localhost:3000/uPins/update',
+                    url:'/uPins/update',
                     data:{
                       '_id': document.getElementById("inputName").value,//'ObjectId("'+id+'")',
                       'pinNum': document.getElementById("newPin").value
@@ -172,7 +190,7 @@ class editUser extends Component {
                 console.log(userChange);
                 axios({
                     method:'put',
-                    url:'http://localhost:3000/Users/update',
+                    url:'/Users/update',
                     data:{
                       '_id': document.getElementById("inputName").value,//'ObjectId("'+id+'")',
                       'changes': userChange
@@ -209,70 +227,21 @@ class editUser extends Component {
                 console.log(this.state.modalText);
                   })
             }
+        }.bind(this))
+        
+      }
+      
+        }).catch(function (error) {
+          console.log(error);
+          this.setState({
+            display: true,
+            modalText:"Error: Could not check for pin duplicate!"
+        });
         }.bind(this));
-/*
-        if (userEdits[userEdits.length-2] === ',') {
-            userEdits = userEdits.substring(0, userEdits.length-2) + " }";
-        } else {
-            userEdits = "";
-        }
-
-        if(document.getElementById("newPin").value !== "") {
-            axios({
-                method:'put',
-                url:'http://localhost:3000/uPins/update',
-                data:{
-                  '_id': document.getElementById("inputName").value,//'ObjectId("'+id+'")',
-                  'pinNum': document.getElementById("newPin").value
-                }
-              })
-              .then(res => {
-                console.log(res.data);
-                this.setState({
-                    display: true,
-                    modalText:"User Successfully Updated!"
-              });
-              })
-              .catch(function (error) {
-                console.log(error);
-                this.setState({
-                  display: true,
-                  modalText:"Error: Pin Could Not Be Updated!"
-            });
-              })
-        }
-        console.log("Edits: " + userEdits);
-        if(userEdits !== "") {
-            userChange = JSON.parse(userEdits);
-            console.log(userChange);
-            axios({
-                method:'put',
-                url:'http://localhost:3000/Users/update',
-                data:{
-                  '_id': document.getElementById("inputName").value,//'ObjectId("'+id+'")',
-                  'changes': userChange
-                }
-              })
-              .then(res => {
-                console.log(res.data);
-                this.setState({
-                    display: true,
-                    modalText:"User Successfully Updated!"
-              });
-              })
-              .catch(function (error) {
-                console.log(error);
-                this.setState({
-                  display: true,
-                  modalText:"Error: User Could Not Be Updated!"
-            });
-              })
-        }
-        */
-        }
   }
   
   }
+}
   
       render() {
           return (
