@@ -10,6 +10,7 @@ import { tsConstructorType } from '@babel/types';
 import PinInput from './components/PinInput';
 import AddUsers from './components/AddUser';
 import DeleteUsers from './components/DeleteUser';
+import EditUsers from './components/EditUser';
 
 
 
@@ -59,6 +60,12 @@ class App extends React.Component {
         case 'deleteUsers':
         this.setState({
           appShow: <DeleteUsers/>,
+          show: show
+        })
+        break;
+        case 'editUsers':
+        this.setState({
+          appShow: <EditUsers/>,
           show: show
         })
         break;

@@ -22,6 +22,8 @@ router.route('/create')
 router.route('/list')
   .get(Users.list);
 
+router.route('/update')
+  .put(Users.update);
 //router.param('User', Users.list);
 
 module.exports = router;
