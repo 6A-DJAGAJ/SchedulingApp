@@ -1,5 +1,6 @@
 const path = require('path'),
     express = require('express'),
+    session = require('express-session'),
     mongoose = require('mongoose'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
@@ -29,7 +30,11 @@ module.exports.init = () => {
 
 
     // initialize app
-    const app = express();
+    const app = express(
+        app.use(session({
+            'secret': 'secretstring'
+        }))
+    );
 
     // enable request logging for development debugging
     app.use(morgan('dev'));
