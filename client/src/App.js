@@ -8,8 +8,6 @@ import Scheduler from "./components/Scheduler";
 import Login from "./components/Login/Login";
 import { tsConstructorType } from '@babel/types';
 import PinInput from './components/PinInput';
-import AddUsers from './components/AddUser';
-import DeleteUsers from './components/DeleteUser';
 
 
 
@@ -50,18 +48,6 @@ class App extends React.Component {
               show: show
             })
           break;
-        case 'addUsers':
-        this.setState({
-          appShow: <AddUsers/>,
-          show: show
-        })
-        break;
-        case 'deleteUsers':
-        this.setState({
-          appShow: <DeleteUsers/>,
-          show: show
-        })
-        break;
     }
   };
   render(){
