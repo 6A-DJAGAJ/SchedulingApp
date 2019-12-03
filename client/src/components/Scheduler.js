@@ -66,9 +66,10 @@ class Scheduler extends Component {
                 break;
             case "month":
                 DayPilot.Modal.prompt("Type in a start date", "Format: YYYY-MM-DD").then(modal =>{
-                  if (!modal.result) {
+                   if (!modal.result) {
                         return;
                       }
+                  if(modal.result!="Format: YYYY-MM-DD"){
                   this.setState({
                       startDate: new Date(modal.result),
                       days: DayPilot.Date.today().daysInMonth(),
@@ -80,6 +81,21 @@ class Scheduler extends Component {
                       cellWidthSpec: "Auto",
                       cellWidth: 50,
                   });
+                }
+                else{
+                  this.setState({
+                      startDate: DayPilot.Date.today(),
+                      days: DayPilot.Date.today().daysInMonth(),
+                      scale: "Day",
+                      timeHeaders: [
+                          { groupBy: "Month"},
+                          { groupBy: "Day", format: "d"}
+                      ],
+                      cellWidthSpec: "Auto",
+                      cellWidth: 50,
+                  });
+
+                }
                 });
                 break;
                 /*DayPilot.Modal.prompt("New event name", "Event").then(modal => {
@@ -101,6 +117,7 @@ class Scheduler extends Component {
                 if (!modal.result) {
                         return;
                       }
+                if(modal.result!="Format: YYYY-MM-DD"){
                   this.setState({
                       startDate: new Date(modal.result),
                       days: 7,
@@ -110,13 +127,26 @@ class Scheduler extends Component {
                         { groupBy: "Day" }
                       ],
                   });
+                }
+                else{
+                  this.setState({
+                      startDate: DayPilot.Date.today(),
+                      days: 7,
+                      scale: "Day",
+                      timeHeaders: [
+                        { groupBy: "Month", format: "MMMM yyyy"},
+                        { groupBy: "Day" }
+                      ],
+                  });
+                }
                 });
               break;
               case "day":
               DayPilot.Modal.prompt("Type in a date", "Format: YYYY-MM-DD").then(modal =>{
-                if (!modal.result) {
+                 if (!modal.result) {
                         return;
                       }
+                if(modal.result!="Format: YYYY-MM-DD"){
               this.setState({
                    startDate: new Date(modal.result),
                     days: 1,
@@ -127,6 +157,19 @@ class Scheduler extends Component {
                       { groupBy: "Hour" }
                     ],
                 });
+            }
+            else{
+               this.setState({
+                   startDate: DayPilot.Date.today(),
+                    days: 1,
+                    scale: "CellDuration",
+                    cellDuration: 15,
+                    timeHeaders: [ 
+                     { groupBy: "Day", format: "M/d/yyyy"},
+                      { groupBy: "Hour" }
+                    ],
+                });
+            }
               });
               break;
             default:
@@ -210,12 +253,15 @@ class Scheduler extends Component {
                   
                   
                   onTimeRangeSelected={args => {
-                  
+                    DayPilot.Modal.prompt("New event name", "Event").then(modal => {
                       this.scheduler.clearSelection();
+                      if (!modal.result) {
+                        return;
+                      }
                       //console.log(this.state.resources);
                       this.scheduler.events.add({
                         id: DayPilot.guid(),
-                        text: args.start,
+                        text: modal.result,
                         start: args.start,
                         end: args.end,
                         resource: args.resource
@@ -230,8 +276,8 @@ class Scheduler extends Component {
                         }
                       });
 
-                    } 
-                  }
+                    }); 
+                  }}
                 
                      onEventClick = {args =>{
                      console.log(args);
