@@ -16,8 +16,8 @@ class Header extends React.Component {
 
     render(){
     
-    if (this.props.admin == '') {
-        console.log('rendering undefined');
+    if (this.props.admin === false) {
+        console.log('rendering user');
         return (
             <div style={{paddingBottom:"10px"}}>
                 <Navbar className="bg-dark" expand="lg">
@@ -26,12 +26,16 @@ class Header extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                     <Nav.Link href="#dash" className="nav-colors" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
+                    <Nav.Link href="#schedule" className="nav-colors" onClick={() => this.updatePage('schedule')}>Schedule</Nav.Link>
+                    <Nav.Link href="#tasks" className="nav-colors">Tasks</Nav.Link>
+                    <Nav.Link href="#timeclock" className="nav-colors" onClick={() => this.updatePage('timeclock')}>Timeclock</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 </Navbar>
             </div>
         )
-    } else if (this.props.admin == true) {
+        
+    } else if (this.props.admin === true) {
         console.log('rendering admin');
         return (
             <div style={{paddingBottom:"10px"}}>
@@ -54,7 +58,7 @@ class Header extends React.Component {
             </div>
         )
     } else {
-        console.log('rendering user');
+        console.log('rendering undefined');
         return (
             <div style={{paddingBottom:"10px"}}>
                 <Navbar className="bg-dark" expand="lg">
@@ -63,9 +67,6 @@ class Header extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                     <Nav.Link href="#dash" className="nav-colors" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
-                    <Nav.Link href="#schedule" className="nav-colors" onClick={() => this.updatePage('schedule')}>Schedule</Nav.Link>
-                    <Nav.Link href="#tasks" className="nav-colors">Tasks</Nav.Link>
-                    <Nav.Link href="#timeclock" className="nav-colors" onClick={() => this.updatePage('timeclock')}>Timeclock</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 </Navbar>
