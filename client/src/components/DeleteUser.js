@@ -33,7 +33,7 @@ if (document.getElementById("inputName").value === "") {
 
  axios({
   method:'get',
-  url:'http://localhost:3000/Users/list'
+  url:'/Users/list'
 })
 .then(res => {
   console.log(res.data);
@@ -57,7 +57,7 @@ document.getElementById("inputName").value = "";
 } else {
   axios({
     method:'delete',
-    url:'http://localhost:3000/Users/delete',
+    url:'/Users/delete',
     data:{
       '_id': id
     }
@@ -66,7 +66,7 @@ document.getElementById("inputName").value = "";
     console.log(res.data);
     axios({
       method:'delete',
-      url:'http://localhost:3000/uPins/delete',
+      url:'/uPins/delete',
       data:{
         '_id': id
       }

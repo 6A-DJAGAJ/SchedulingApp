@@ -41,10 +41,7 @@ class Zoom extends Component {
                         {/* can get the state using value={this.state.level}*/}
                         <ToggleButtonGroup type="radio"   name="zoom" defaultValue={"month"} >
 
-                             <ToggleButton value="year" 
-                            checked={this.state.level === "year"} onChange={ev => this.change(ev)}>
-                                Year
-                            </ToggleButton>
+                
                             <ToggleButton value="month" 
                             checked={this.state.level === "month"} onChange={ev => this.change(ev)}>
                                 Month

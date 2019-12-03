@@ -96,6 +96,12 @@ try{
     })
   }
 
+  exports.update = function(req, res) {
+    uPins.findOneAndUpdate({'_id' : req.body._id}, {'pinNum' : req.body.pinNum}, function(err,document){
+      res.send(document);
+  })
+}
+
 
 //#######################           #######################//
 //####################### Clock  In #######################//
