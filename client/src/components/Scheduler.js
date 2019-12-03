@@ -252,7 +252,7 @@ class Scheduler extends Component {
                       });
                       axios({
                         method:'post',
-                        url:'http://localhost:3000/uAvail/create',
+                        url:'uAvail/create',
                         data:{
                           "employeeID": args.resource,
                            "start": args.start,
