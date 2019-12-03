@@ -241,7 +241,6 @@ class Scheduler extends Component {
                   
                   
                   onTimeRangeSelected={args => {
-                   
                       this.scheduler.clearSelection();
                       this.scheduler.events.add({
                         id: DayPilot.guid(),
