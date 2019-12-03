@@ -16,7 +16,7 @@ class Login extends Component {
         else {
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/Users/login',
+                url: '/Users/login',
                 data: {
                     'formEmail': document.getElementById("inputUsername").value,
                     'formPassword': document.getElementById("inputPassword").value
