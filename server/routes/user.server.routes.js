@@ -10,6 +10,7 @@ router.route('/list')
 // Checks info and logs user in
 router.post('/login', function (req, res) {
   Users.validate(req, res);
+  console.log('Current session: ', req.session.user);
 });
 
 router.route('/delete')

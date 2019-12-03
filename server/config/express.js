@@ -32,7 +32,8 @@ module.exports.init = () => {
     // initialize app
     const app = express()
     app.use(session({
-        'secret': 'secretstring'
+        secret: 'secretstring',
+        saveUninitialized: false
     }))
 
     // enable request logging for development debugging

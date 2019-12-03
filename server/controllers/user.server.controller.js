@@ -66,6 +66,7 @@ try{
           // Check for matching password
           bcrypt.compare(req.body.formPassword, user.password, function (err, result) {
             if (result) {
+              req.session.user = user.email
               res.status(200).send('User found');
             } else {
               res.status(202).send('Incorrect password');
