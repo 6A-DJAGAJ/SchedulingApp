@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
+import moment from 'moment'
 //import '../Scheduler.css'
 
 class Scheduler extends Component {
@@ -51,19 +52,6 @@ class Scheduler extends Component {
 
     zoomChange(args) {
         switch (args.level) {
-            case "year":
-                this.setState({
-                    startDate: DayPilot.Date.today().firstDayOfYear(),
-                    days: DayPilot.Date.today().daysInYear(),
-                    scale: "Day",
-                    timeHeaders: [
-                        { groupBy: "Year"},
-                        { groupBy: "Month"}
-                    ],
-                    cellWidthSpec: "Auto",
-                    cellWidth: 50,
-                });
-                break;
             case "month":
                 DayPilot.Modal.prompt("Type in a start date", "Format: YYYY-MM-DD").then(modal =>{
                    if (!modal.result) {
@@ -214,7 +202,7 @@ class Scheduler extends Component {
               res.data.map((year)=>
                 this.scheduler.events.add({
                               id: year._id,
-                              text: year.start +"--" + year.end,
+                              text: moment().utc(year.start).format("hh:mm") + "--" + moment().utc(year.end).format("hh:mm"),
                               start: year.start,
                               end: year.end,
                               resource: year.employeeID
