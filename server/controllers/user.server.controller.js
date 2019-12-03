@@ -1,5 +1,6 @@
 
 var mongoose = require('mongoose'), 
+    bcrypt = require('bcryptjs')
     Users = require('../models/Users.server.model.js')
     uPins = require('../controllers/pin.server.controller.js')
 
@@ -24,21 +25,24 @@ try{
       console.log(error);
     });  */
     exports.create = function(req, res) {
-    
+
       /* Instantiate a User */
       var user = new Users(req.body);
-     
-      /* Then save the User */
-      Users.save(function(err) {
-        if(err) {
-          console.log(err);
-          res.status(400).send(err);
-        } else {
-          res.json(user);
-          console.log(user)
-        }
+
+      // Hash the password and save to database
+      bcrypt.hash(user.password, 10).then(function(hash) {
+        user.password = hash;
+        user.save(function(err) {
+          if(err) {
+            console.log(err);
+            res.status(400).send(err);
+          } else {
+            res.json(user);
+            console.log(user)
+          }
+        });
       });
-    };
+    }; 
 
     // use url localhost:3000/Users/list/
     exports.list = function(req, res) {
@@ -49,12 +53,40 @@ try{
         res.send(users);
       }).sort('name');
     };
+
+    // Compares form email and password to database
+    exports.validate = function(req, res) {
+      Users.findOne({email : req.body.formEmail})
+      .exec(function (err, user) {
+        if (err) {
+          return callback(err);
+        } else if (!user) {
+          res.status(202).send('User not found');
+        } else {
+          // Check for matching password
+          bcrypt.compare(req.body.formPassword, user.password, function (err, result) {
+            if (result) {
+              res.status(200).send('User found');
+            } else {
+              res.status(202).send('Incorrect password');
+            }
+          })
+        }
+      });
+    };
+
     exports.delete = function(req, res) {
       Users.findOneAndRemove({'_id' : req.body._id}, function(err,document){
         res.send(document);
       })
     }
-    
+
+    exports.update = function(req, res) {
+      Users.findOneAndUpdate({'_id' : req.body._id}, req.body.changes, function(err,document){
+        res.send(document);
+      })
+    }
+
 }
 catch(err){
     console.log(err);

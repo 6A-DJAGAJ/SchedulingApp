@@ -2,15 +2,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-var userSchema = new Schema({
-    name: String,
-    email: String,
-    password: String,
-    position: String,
-    salary: Number
+var positionSchema = new Schema({
+    Position: String
 });
 
-/* userSchema.pre('save', function(next, err) {
+/* positionSchema.pre('save', function(next, err) {
     if (!this.name){
       next(err);
     }
@@ -26,6 +22,6 @@ var userSchema = new Schema({
 
 
 //model decides database, schema, collection
-var Users = mongoose.model('userData', userSchema, 'Users');
+var Positions = mongoose.model('positions', positionSchema, 'positions');
 
-module.exports = Users;
+module.exports = Positions;

@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
+//import '../Scheduler.css'
 
 class Scheduler extends Component {
     constructor(props) {
@@ -24,17 +25,26 @@ class Scheduler extends Component {
             cellWidth: 50,
             resources: [],
             events: [],
-            items: [],
+            //items: [],
             //rowCreateHandling: "Enabled",
             eventDeleteHandling: "Update",
         };
-        this.loadPeople();
+        
+
+       
         
         //const resources.name = res.name;
         //resources.id = res._id;
         //console.log(persons);
         //this.setState({ resources });      
     }
+    componentDidMount() {
+      //console.log(this.state);
+       this.loadPeople();
+       //console.log(this.state);
+        //this.loadEvents();
+    }
+
    
 
     zoomChange(args) {
@@ -120,23 +130,29 @@ class Scheduler extends Component {
         });
     }*/
 
+
   
      loadPeople = () => {
       
         axios.
-        get('http://localhost:3000/users/list')
+        get('/users/list')
         .then(res =>{
         //console.log(res.data);
         res.data.map((list)=>
           this.setState({
-            resources: this.state.resources.concat({id: list._id, name: list.name}),
-            items: this.state.items.concat(list._id),
+            resources: this.state.resources.concat({id: list._id, name: list.name})
+            //items: this.state.items.concat(list._id),
           }),
-           axios({
+           
+          );
+         //console.log(this.state.resources);
+        this.state.resources.map((users)=>
+          //console.log(users.id),
+        axios({
               method:'post',
-              url:'http://localhost:3000/uAvail/year',
+              url:'/uAvail/year',
               data:{
-                "employeeID": "5de425559aa62a4c9cd99fa3"
+                "employeeID": users.id
               }
             })
             .then(res => {
@@ -154,17 +170,11 @@ class Scheduler extends Component {
             })
             .catch(function (error) {
               console.log(error);
-        }),  
-          );
+        }),
+            );
         });
-
-        
-
-
-      
-
          
-        //console.log(this.resources);
+        //console.log(this.state);
       }
 
     render() {
@@ -192,7 +202,7 @@ class Scheduler extends Component {
                       if (!modal.result) {
                         return;
                       }
-                      console.log(args);
+                      //console.log(this.state.resources);
                       this.scheduler.events.add({
                         id: DayPilot.guid(),
                         text: modal.result,
@@ -200,6 +210,16 @@ class Scheduler extends Component {
                         end: args.end,
                         resource: args.resource
                       });
+                      axios({
+                        method:'post',
+                        url:'http://localhost:3000/uAvail/create',
+                        data:{
+                          "employeeID": args.resource,
+                           "start": args.start,
+                           "end": args.end
+                        }
+                      });
+
                     }); 
                   }}
                 
@@ -213,12 +233,6 @@ class Scheduler extends Component {
                         });
                         
                   }}
-
-                  
-
-               
-
-
 
                   ref={component => { this.scheduler = component && component.control; }}
                 />

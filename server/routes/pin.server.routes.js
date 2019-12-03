@@ -10,6 +10,9 @@ const uPins = require('../controllers/pin.server.controller'),
   localhost:3000/clockIn/3737
 */
 
+router.route('/create')
+  .post(uPins.create)
+
 router.route('/list')
   .get(uPins.list)
 
@@ -20,6 +23,9 @@ router.route('/clockIn/:pinNumIn')
   .get(uPins.read);
 router.route('/clockOut/:pinNumOut')
   .get(uPins.read);
+
+router.route('/update')
+  .put(uPins.update);
 
 
 //paramaters are sent to the exported functions
