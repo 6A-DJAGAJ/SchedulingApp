@@ -56,8 +56,7 @@ if (document.getElementById("inputName").value === "" ||
   document.getElementById("inputPosition").value === "" ||
   document.getElementById("inputSalary").value === "" ||
   document.getElementById("inputPassword").value === "" ||
-  document.getElementById("inputPin").value === "" ||
-  document.getElementById("inputAccess").value === "") {
+  document.getElementById("inputPin").value === "") {
     this.setState({
       display: true,
       modalText:"Error: New User Could Not Be Created! Values Cannot be Empty!"
@@ -89,8 +88,7 @@ if (document.getElementById("inputName").value === "" ||
             'email': document.getElementById("inputEmail").value,
             'password': document.getElementById("inputPassword").value,
             'position': document.getElementById("inputPosition").value,
-            'salary': document.getElementById("inputSalary").value,
-            'admin': document.getElementById("inputAccess").value
+            'salary': document.getElementById("inputSalary").value
           }
         })
         .then(res => {
@@ -119,7 +117,6 @@ if (document.getElementById("inputName").value === "" ||
         document.getElementById("inputSalary").value = "";
         document.getElementById("inputPassword").value = "";
         document.getElementById("inputPin").value = "";
-        document.getElementById("inputAccess").value = "";
           } else {
             console.log(id);
             axios({
@@ -151,7 +148,6 @@ if (document.getElementById("inputName").value === "" ||
         document.getElementById("inputSalary").value = "";
         document.getElementById("inputPassword").value = "";
         document.getElementById("inputPin").value = "";
-        document.getElementById("inputAccess").value = "";
           })
           .catch(function (error) {
             console.log(error);
@@ -214,11 +210,6 @@ if (document.getElementById("inputName").value === "" ||
                     </select>
                     <label for="inputSalary" class="sr-only">Salary</label>
                     <input type="text" id="inputSalary" class="form-control" placeholder="Salary" />
-                    <select id="inputAccess">
-                      <option value="">Access: Is this User An Admin?</option>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    </select>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                 </form>
             </div>

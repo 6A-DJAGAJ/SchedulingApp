@@ -88,8 +88,7 @@ class editUser extends Component {
             document.getElementById("newPosition").value === "" &&
             document.getElementById("newSalary").value === "" &&
             document.getElementById("newPassword").value === "" &&
-            document.getElementById("newPin").value === "" &&
-            document.getElementById("inputAccess").value === "") {
+            document.getElementById("newPin").value === "") {
     this.setState({
       display: true,
       modalText:"Error: User Could Not Be Updated, No Values Changed!"
@@ -129,9 +128,6 @@ class editUser extends Component {
         if(document.getElementById("newSalary").value !== "") {
             userEdits += '"salary" : ' + document.getElementById("newSalary").value + ", ";
         }
-        if(document.getElementById("inputAccess").value !== "") {
-          userEdits += '"admin" : ' + document.getElementById("inputAccess").value + ", ";
-      }
         if(document.getElementById("newPassword").value !== "") {
             bcrypt.hash(pw, 10).then(function(hash) {
                 pw = hash;
@@ -170,7 +166,6 @@ class editUser extends Component {
                     document.getElementById("newSalary").value = "";
                     document.getElementById("newPassword").value = "";
                     document.getElementById("newPin").value = "";
-                    document.getElementById("inputAccess").value = "";
                   console.log(this.state.modalText);
                   })
                   .catch(function (error) {
@@ -186,7 +181,6 @@ class editUser extends Component {
                     document.getElementById("newSalary").value = "";
                     document.getElementById("newPassword").value = "";
                     document.getElementById("newPin").value = "";
-                    document.getElementById("inputAccess").value = "";
                 console.log(this.state.modalText);
                   })
             }
@@ -215,7 +209,6 @@ class editUser extends Component {
                     document.getElementById("newSalary").value = "";
                     document.getElementById("newPassword").value = "";
                     document.getElementById("newPin").value = "";
-                    document.getElementById("inputAccess").value = "";
                   console.log(this.state.modalText);
                   })
                   .catch(function (error) {
@@ -231,7 +224,6 @@ class editUser extends Component {
                     document.getElementById("newSalary").value = "";
                     document.getElementById("newPassword").value = "";
                     document.getElementById("newPin").value = "";
-                    document.getElementById("inputAccess").value = "";
                 console.log(this.state.modalText);
                   })
             }
@@ -285,11 +277,6 @@ class editUser extends Component {
                           </select>
                           <label for="newSalary" class="sr-only">New Salary</label>
                           <input type="text" id="newSalary" class="form-control" placeholder="Enter New Salary" />
-                          <select id="inputAccess">
-                            <option value="">New Access Level</option>
-                            <option value="true">Admin</option>
-                            <option value="false">Regular User</option>
-                          </select>
                           <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                       </form>
               </div>
