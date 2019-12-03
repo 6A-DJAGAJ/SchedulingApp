@@ -277,6 +277,10 @@ class Scheduler extends Component {
                         });
                         
                   }}
+                   onEventDelete  = {args =>{
+                    console.log("test");
+                   }
+                 }
 
                   ref={component => { this.scheduler = component && component.control; }}
                 />
