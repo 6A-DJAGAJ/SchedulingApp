@@ -10,7 +10,7 @@ try{
     /* Sample axios:
     axios({
       method:'post',
-      url:'http://localhost:3000/Users/create',
+      url:'/Users/create',
       data:{
         'name': 'Jaxson Jerger',
         'email': 'jaxsonj@email.com',

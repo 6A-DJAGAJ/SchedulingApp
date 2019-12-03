@@ -40,7 +40,7 @@ class PinInput extends Component {
 			 var messages = this.state.messages;
 			 var fromServer = this.state.fromServer;
 			 var log;
-			 axios.get('http://localhost:3000/uPins/' + director + '/' + value)
+			 axios.get('/uPins/' + director + '/' + value)
 			.then(res => {
 				const fromServer = res.data;
 				console.log(fromServer.name)
