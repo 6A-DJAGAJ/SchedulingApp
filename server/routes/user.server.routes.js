@@ -11,6 +11,7 @@ router.route('/list')
 router.post('/login', function (req, res) {
   Users.validate(req, res);
   console.log('Current session: ', req.session.user);
+  console.log('Is admin?: ', req.session.admin);
 });
 
 router.route('/delete')
