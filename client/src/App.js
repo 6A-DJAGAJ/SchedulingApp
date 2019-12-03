@@ -78,7 +78,7 @@ class App extends React.Component {
     console.log('checking user');
     axios({
       method: 'get',
-      url: 'http://localhost:3000/Users/checkUser',
+      url: '/Users/checkUser',
     })
     .then(res => {
         //console.log('user: ', res.data.user);
