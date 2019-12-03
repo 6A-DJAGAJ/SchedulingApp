@@ -202,7 +202,7 @@ class Scheduler extends Component {
               res.data.map((year)=>
                 this.scheduler.events.add({
                               id: year._id,
-                              text: moment().utc(year.start).format("hh:mm") + "--" + moment().utc(year.end).format("hh:mm"),
+                              text: moment(year.start).format("hh:mm") + "--" + moment(year.end).format("hh:mm"),
                               start: year.start,
                               end: year.end,
                               resource: year.employeeID
@@ -241,22 +241,18 @@ class Scheduler extends Component {
                   
                   
                   onTimeRangeSelected={args => {
-                    DayPilot.Modal.prompt("New event name", "Event").then(modal => {
+                   
                       this.scheduler.clearSelection();
-                      if (!modal.result) {
-                        return;
-                      }
-                      //console.log(this.state.resources);
                       this.scheduler.events.add({
                         id: DayPilot.guid(),
-                        text: modal.result,
+                        text: args.start,
                         start: args.start,
                         end: args.end,
                         resource: args.resource
                       });
                       axios({
                         method:'post',
-                        url:'/uAvail/create',
+                        url:'http://localhost:3000/uAvail/create',
                         data:{
                           "employeeID": args.resource,
                            "start": args.start,
@@ -264,7 +260,7 @@ class Scheduler extends Component {
                         }
                       });
 
-                    }); 
+                   
                   }}
                 
                      onEventClick = {args =>{
