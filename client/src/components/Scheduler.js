@@ -28,6 +28,8 @@ class Scheduler extends Component {
             //items: [],
             //rowCreateHandling: "Enabled",
             eventDeleteHandling: "Update",
+            //theme: "blue",
+            //theme:"scheduler_green",
         };
         
 
@@ -64,6 +66,9 @@ class Scheduler extends Component {
                 break;
             case "month":
                 DayPilot.Modal.prompt("Type in a start date", "Format: YYYY-MM-DD").then(modal =>{
+                  if (!modal.result) {
+                        return;
+                      }
                   this.setState({
                       startDate: new Date(modal.result),
                       days: DayPilot.Date.today().daysInMonth(),
@@ -93,6 +98,9 @@ class Scheduler extends Component {
                     }); */
             case "week":
               DayPilot.Modal.prompt("Type in a start date", "Format: YYYY-MM-DD").then(modal =>{
+                if (!modal.result) {
+                        return;
+                      }
                   this.setState({
                       startDate: new Date(modal.result),
                       days: 7,
@@ -106,6 +114,9 @@ class Scheduler extends Component {
               break;
               case "day":
               DayPilot.Modal.prompt("Type in a date", "Format: YYYY-MM-DD").then(modal =>{
+                if (!modal.result) {
+                        return;
+                      }
               this.setState({
                    startDate: new Date(modal.result),
                     days: 1,
@@ -160,7 +171,7 @@ class Scheduler extends Component {
               res.data.map((year)=>
                 this.scheduler.events.add({
                               id: year._id,
-                              text: year.start,
+                              text: year.start +"--" + year.end,
                               start: year.start,
                               end: year.end,
                               resource: year.employeeID
@@ -182,7 +193,7 @@ class Scheduler extends Component {
         
         return (
             <div>
-
+           
                 <div className="toolbar">
                     <Row noGutters style={{margin:"center", paddingBottom:"10px", paddingLeft:"10px"}}>
                         <Col>
@@ -190,22 +201,21 @@ class Scheduler extends Component {
                         </Col>
                     </Row>
                 </div>
+
                 
 
                 <DayPilotScheduler
                   {...config}
+
                   
                   
                   onTimeRangeSelected={args => {
-                    DayPilot.Modal.prompt("New event name", "Event").then(modal => {
+                  
                       this.scheduler.clearSelection();
-                      if (!modal.result) {
-                        return;
-                      }
                       //console.log(this.state.resources);
                       this.scheduler.events.add({
                         id: DayPilot.guid(),
-                        text: modal.result,
+                        text: args.start,
                         start: args.start,
                         end: args.end,
                         resource: args.resource
@@ -220,8 +230,8 @@ class Scheduler extends Component {
                         }
                       });
 
-                    }); 
-                  }}
+                    } 
+                  }
                 
                      onEventClick = {args =>{
                      console.log(args);
