@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
-import moment from 'moment'
+import moment from 'moment';
+import mongoose from 'mongoose';
 //import '../Scheduler.css'
 
 class Scheduler extends Component {
@@ -219,6 +220,16 @@ class Scheduler extends Component {
         //console.log(this.state);
       }
 
+      makeid =(length) => {
+         var result           = '';
+         var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+         var charactersLength = characters.length;
+         for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+         }
+         return result;
+      }
+
     render() {
         var {...config} = this.state;
         
@@ -241,6 +252,8 @@ class Scheduler extends Component {
                   
                   
                   onTimeRangeSelected={args => {
+                    var tempid = this.makeid(12);
+                    var id1 = mongoose.Types.ObjectId(tempid);
                       this.scheduler.clearSelection();
                       this.scheduler.events.add({
                         id: DayPilot.guid(),
@@ -249,10 +262,12 @@ class Scheduler extends Component {
                         end: args.end,
                         resource: args.resource
                       });
+                      //console.log(id1);
                       axios({
                         method:'post',
                         url:'uAvail/create',
                         data:{
+                          "_id": id1,
                           "employeeID": args.resource,
                            "start": args.start,
                            "end": args.end
@@ -261,19 +276,45 @@ class Scheduler extends Component {
 
                    
                   }}
-                
-                     onEventClick = {args =>{
-                     console.log(args);
-                        DayPilot.Modal.prompt("Edit", "Event").then(modal => {
-                        args.e.text(modal.result);
-                        //console.log(args.e.text);
-                        this.scheduler.events.update(args.e);
-                        this.scheduler.init();
-                        });
-                        
+
+                  onEventResized= {args =>{
+                    console.log(args);
+                      axios({
+                        method:'post',
+                        url:'uAvail/update',
+                        data:{
+                          "_id": args.e.data.id,
+                          "employeeID": args.resource,
+                           "start": args.newStart,
+                           "end": args.newEnd
+                        }
+                      });
                   }}
+
+                 onEventMoved = {args =>{
+                  //console.log(args);
+                  axios({
+                        method:'post',
+                        url:'uAvail/update',
+                        data:{
+                          "_id": args.e.data.id,
+                          "employeeID": args.resource,
+                           "start": args.newStart,
+                           "end": args.newEnd
+                        }
+                      });
+                 }}
+              
                    onEventDelete  = {args =>{
-                    console.log("test");
+                    console.log(args);
+                    console.log(args.e.data.id);
+                    axios({
+                        method:'delete',
+                        url:'/uAvail/delete/',
+                        data:{
+                          "_id": args.e.data.id,
+                        }
+                      });
                    }
                  }
 
