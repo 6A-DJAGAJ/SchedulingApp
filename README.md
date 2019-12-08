@@ -82,7 +82,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 Test for Austin
 (ignore this comment, you never saw this)
 
-##Sources and Citations
+## Sources and Citations
 https://mdbootstrap.com/docs/jquery/tables/generator/
 https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
 https://medium.com/@quynh.totuan/how-to-get-the-current-week-in-javascript-9e64d45a9a08
