@@ -4,7 +4,6 @@ const path = require('path'),
     mongoose = require('mongoose'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
-    //config = require('./config'),
     userRouter = require('../routes/user.server.routes');
     availRouter = require('../routes/avail.server.routes');
     noAvailRouter = require('../routes/noAvail.server.routes');
@@ -18,7 +17,7 @@ module.exports.init = () => {
     */
    // Attempt connecting to mongoose database userData (selects all collections inside)
     try {
-        mongoose.connect(config.dbUserData.uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         mongoose.set('useCreateIndex', true);
         mongoose.set('useFindAndModify', false);
         console.log('Successfully connected to Users db')
