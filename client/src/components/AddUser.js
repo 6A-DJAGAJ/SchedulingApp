@@ -197,7 +197,6 @@ if (document.getElementById("inputName").value === "" ||
 
     render() {
         return (
-          //Code for what Modal does
             <div class="add-user-component">
               <Modal show={this.state.display} onHide={this.handleClose}>
 				        <Modal.Header closeButton>
@@ -210,7 +209,6 @@ if (document.getElementById("inputName").value === "" ||
 					        </Button>
 				        </Modal.Footer>
                 </Modal>
-                //form to take user input
                 <form class="text-center" name="user" onSubmit={this.handleSubmit}>
                 <h1 class="h3 mb-3">New User</h1>
                     <label for="inputName" class="sr-only">Name</label>
@@ -232,7 +230,6 @@ if (document.getElementById("inputName").value === "" ||
                       <option value="true">Yes</option>
                       <option value="false">No</option>
                     </select>
-                    //button to submit form
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                 </form>
             </div>
