@@ -28,6 +28,7 @@ class Login extends Component {
                     document.getElementById("errorText").innerText = "Invalid username or password";
                 } else {
                     document.getElementById("errorText").innerText = "Logged in";
+                    document.getElementById("navDash").click();
                 }
             })
         }
