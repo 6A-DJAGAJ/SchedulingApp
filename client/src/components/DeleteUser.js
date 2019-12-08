@@ -111,7 +111,6 @@ document.getElementById("inputName").value = "";
 
     render() {
         return (
-          //modal
             <div class="add-user-component">
               <Modal show={this.state.display} onHide={this.handleClose}>
 				      <Modal.Header closeButton>
@@ -124,7 +123,6 @@ document.getElementById("inputName").value = "";
 					      </Button>
 				      </Modal.Footer>
               </Modal>
-              //form to take in name
               <form class="text-center" name="user" onSubmit={this.handleSubmit}>
               <h1 class="h3 mb-3">Delete User</h1>
                   <label for="inputName" class="sr-only">Name</label>
