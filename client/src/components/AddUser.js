@@ -4,6 +4,8 @@ import './addUser.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
+//Component used for admins to create new users on the web app
+
 class addUser extends Component {
 
   constructor() {
@@ -15,16 +17,15 @@ class addUser extends Component {
     };
     this.pos = [];
     this.options = "";
+    //axios request to check list of positions at company
     axios({
       method:'get',
       url:'/positions/list'
     })
+    //if axios request succeeds, take list of positions and create dropdown selects for form
     .then(res => {
-      console.log(res);
-      console.log(res.data);
       for (var i = 0; i < res.data.length; i++) {
         this.pos[i] = res.data[i].Position;
-        console.log(this.pos[i]);
     }
       var select = document.getElementById("inputPosition"); 
 
@@ -41,16 +42,17 @@ class addUser extends Component {
     })
 
   }
-
+//what happens when Modal popup closes
   handleClose = () => {
 		var display = this.state.display
 			display = false;
 			this.setState({display});
 	}
-
+//handle submission of the form
   handleSubmit(event) {
+    //prevent refresh of page
     event.preventDefault();
-
+//if any parts of the form are empty, send error and don't do anything
 if (document.getElementById("inputName").value === "" ||
   document.getElementById("inputEmail").value === "" ||
   document.getElementById("inputPosition").value === "" ||
@@ -62,25 +64,32 @@ if (document.getElementById("inputName").value === "" ||
       display: true,
       modalText:"Error: New User Could Not Be Created! Values Cannot be Empty!"
   });
+  //if no parts of form are empty, start working on request
   } else { 
+    //get list of pins
     var pinCheck = "false";
     axios({
       method:'get',
       url:'/uPins/list'
     })
+    //if request succeeds, continue
     .then(res => {
+      //check if pin is already in use by another user
       for (var i = 0; i < res.data.length; i++) {
         if(document.getElementById("inputPin").value === res.data[i].pinNum) {
           pinCheck = "true";
         }
       }
+      //if pin is in use, dont create new user
       if(pinCheck === "true") {
         this.setState({
           display: true,
           modalText:"Pin Already In Use! Please Enter Different Pin!"
       });
       }
+      //if pin is not in use, continue
       else {
+        //axios request to create new user with user input values
         axios({
           method:'post',
           url:'/Users/create',
@@ -95,7 +104,7 @@ if (document.getElementById("inputName").value === "" ||
         })
         .then(res => {
           console.log(res.data);
-        
+        //pull list of users to get the id of the user just created
           axios({
             method:'get',
             url:'/Users/list'
@@ -113,6 +122,7 @@ if (document.getElementById("inputName").value === "" ||
               display: true,
               modalText:"Error: User Not Deleted! Name Not Found"
           });
+          //clear form
         document.getElementById("inputName").value = "";
         document.getElementById("inputEmail").value = "";
         document.getElementById("inputPosition").value = "";
@@ -121,7 +131,7 @@ if (document.getElementById("inputName").value === "" ||
         document.getElementById("inputPin").value = "";
         document.getElementById("inputAccess").value = "";
           } else {
-            console.log(id);
+            //axios request to create a new pin based on user id
             axios({
               method:'post',
               url:'/uPins/create',
@@ -145,6 +155,7 @@ if (document.getElementById("inputName").value === "" ||
           });
             })
           }
+          //clear form
         document.getElementById("inputName").value = "";
         document.getElementById("inputEmail").value = "";
         document.getElementById("inputPosition").value = "";
@@ -186,6 +197,7 @@ if (document.getElementById("inputName").value === "" ||
 
     render() {
         return (
+          //Code for what Modal does
             <div class="add-user-component">
               <Modal show={this.state.display} onHide={this.handleClose}>
 				        <Modal.Header closeButton>
@@ -197,7 +209,8 @@ if (document.getElementById("inputName").value === "" ||
 						        Close
 					        </Button>
 				        </Modal.Footer>
-			          </Modal>
+                </Modal>
+                //form to take user input
                 <form class="text-center" name="user" onSubmit={this.handleSubmit}>
                 <h1 class="h3 mb-3">New User</h1>
                     <label for="inputName" class="sr-only">Name</label>
@@ -219,6 +232,7 @@ if (document.getElementById("inputName").value === "" ||
                       <option value="true">Yes</option>
                       <option value="false">No</option>
                     </select>
+                    //button to submit form
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                 </form>
             </div>
