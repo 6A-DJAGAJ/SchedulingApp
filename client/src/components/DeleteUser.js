@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
+//Component used for admins to delete users on the web app
+
 class deleteUser extends Component {
 
   constructor() {
@@ -14,47 +16,46 @@ class deleteUser extends Component {
       modalText: ""
     };
   }
-
+//handle close of Modal popup
   handleClose = () => {
 		var display = this.state.display
 			display = false;
 			this.setState({display});
   }
-  
+  //handle submission of form
   handleSubmit(event) {
+    //prevent page from refreshing on submit
     event.preventDefault();
-
+//if name is empty error out and do nothing
 if (document.getElementById("inputName").value === "") {
     this.setState({
       display: true,
       modalText:"Error: User Not Deleted! Name Cannot be Empty!"
   });
   } else {
-
+//if name is entered, get list of users
  axios({
   method:'get',
   url:'/Users/list'
 })
 .then(res => {
-  console.log(res.data);
-  console.log("input");
-  console.log(document.getElementById("inputName").value);
-  console.log(res.data[0].name);
-  console.log(res.data[0]._id);
   var id = "";
+  //find input name in user list
   for (var i = 0; i < res.data.length; i++) {
     if(res.data[i].name === document.getElementById("inputName").value) {
       id = res.data[i]._id;
-      console.log(res.data[i]._id);
     }
 }
+//error out if user is not found
 if(id === "") {
   this.setState({
     display: true,
     modalText:"Error: User Not Deleted! Name Not Found"
 });
+//clear form
 document.getElementById("inputName").value = "";
 } else {
+  //axios request to delete user based on id
   axios({
     method:'delete',
     url:'/Users/delete',
@@ -63,7 +64,7 @@ document.getElementById("inputName").value = "";
     }
   })
   .then(res => {
-    console.log(res.data);
+    //axios request to delete user pin based on id
     axios({
       method:'delete',
       url:'/uPins/delete',
@@ -110,6 +111,7 @@ document.getElementById("inputName").value = "";
 
     render() {
         return (
+          //modal
             <div class="add-user-component">
               <Modal show={this.state.display} onHide={this.handleClose}>
 				      <Modal.Header closeButton>
@@ -121,7 +123,8 @@ document.getElementById("inputName").value = "";
 						      Close
 					      </Button>
 				      </Modal.Footer>
-			        </Modal>
+              </Modal>
+              //form to take in name
               <form class="text-center" name="user" onSubmit={this.handleSubmit}>
               <h1 class="h3 mb-3">Delete User</h1>
                   <label for="inputName" class="sr-only">Name</label>

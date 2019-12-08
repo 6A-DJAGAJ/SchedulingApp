@@ -6,6 +6,8 @@ import axios from 'axios';
 
 var bcrypt = require('bcryptjs');
 
+//Component used for admins to edit users on the web app
+
 class editUser extends Component {
 
     constructor() {
@@ -17,17 +19,18 @@ class editUser extends Component {
       };
       this.users = [];
       this.ids = [];
+      //get list of users
       axios({
         method:'get',
         url:'/Users/list'
       })
       .then(res => {
+        //take in user names and ids
         for (var i = 0; i < res.data.length; i++) {
           this.users[i] = res.data[i].name;
           this.ids[i] = res.data[i]._id;
-          console.log(this.users[i]);
-          console.log(this.ids[i]);
       }
+      //create select options for names in form 
         var select = document.getElementById("inputName"); 
   
         for(i = 0; i < this.users.length; i++) {
@@ -44,14 +47,17 @@ class editUser extends Component {
       })
   
     this.pos = [];
+    //get list of positons
     axios({
       method:'get',
       url:'/positions/list'
     })
+    //take in positions
     .then(res => {
       for (var i = 0; i < res.data.length; i++) {
         this.pos[i] = res.data[i].Position;
     }
+    //create select options for positons in form
       var select2 = document.getElementById("newPosition"); 
 
       for(i = 0; i < this.pos.length; i++) {
@@ -67,22 +73,24 @@ class editUser extends Component {
     })
 
     }
-  
+  //handle close of Modal popup
     handleClose = () => {
           var display = this.state.display
               display = false;
               this.setState({display});
     }
-    
+    //handle submission of form
     handleSubmit(event) {
+      //prevent refresh of page on form submit
       event.preventDefault();
-  
+  //if no user selected
   if (document.getElementById("inputName").value === "") {
       this.setState({
         display: true,
         modalText:"Error: User must be selected to update!"
     });
     } else {
+      //if all forms are empty, error out
         if (document.getElementById("newName").value === "" &&
             document.getElementById("newEmail").value === "" &&
             document.getElementById("newPosition").value === "" &&
@@ -96,10 +104,12 @@ class editUser extends Component {
   });
         } else {
           var pinCheck = "false";
+          //get list of pins
     axios({
       method:'get',
       url:'/uPins/list'
     })
+    //check if new pin being requested is already in use, error out if it is
     .then(res => {
       for (var i = 0; i < res.data.length; i++) {
         if(document.getElementById("newPin").value === res.data[i].pinNum) {
@@ -117,21 +127,27 @@ class editUser extends Component {
         var userEdits = "{ ";
         var pw = document.getElementById("newPassword").value;
         var pwtemp = document.getElementById("newPassword").value;
+        //if name entered, add name to string for request
         if(document.getElementById("newName").value !== "") {
             userEdits += '"name" : ' + "\"" + document.getElementById("newName").value + "\"" + ", ";
         }
+        //if email entered, add email to string for request
         if(document.getElementById("newEmail").value !== "") {
             userEdits += '"email" : ' + "\"" + document.getElementById("newEmail").value + "\"" + ", ";
         }
+        //if position entered, add position to string for request
         if(document.getElementById("newPosition").value !== "") {
             userEdits += '"position" : ' + "\"" + document.getElementById("newPosition").value + "\"" + ", ";
         }
+        //if salary entered, add salary to string for request
         if(document.getElementById("newSalary").value !== "") {
             userEdits += '"salary" : ' + document.getElementById("newSalary").value + ", ";
         }
+        //if admin access entered, add admin access to string for request
         if(document.getElementById("inputAccess").value !== "") {
           userEdits += '"admin" : ' + document.getElementById("inputAccess").value + ", ";
       }
+      //if password entered, encrypt password and add to string for request
         if(document.getElementById("newPassword").value !== "") {
             bcrypt.hash(pw, 10).then(function(hash) {
                 pw = hash;
@@ -147,7 +163,7 @@ class editUser extends Component {
             } else {
                 userEdits = "";
             }
-    
+    //if new pin entered, submit request to update
             if(document.getElementById("newPin").value !== "") {
                 axios({
                     method:'put',
@@ -163,6 +179,7 @@ class editUser extends Component {
                         display: true,
                         modalText:"User Successfully Updated!"
                   });
+                  //clear form
                     document.getElementById("inputName").value = "";
                     document.getElementById("newName").value = "";
                     document.getElementById("newEmail").value = "";
@@ -171,7 +188,6 @@ class editUser extends Component {
                     document.getElementById("newPassword").value = "";
                     document.getElementById("newPin").value = "";
                     document.getElementById("inputAccess").value = "";
-                  console.log(this.state.modalText);
                   })
                   .catch(function (error) {
                     console.log(error);
@@ -179,6 +195,7 @@ class editUser extends Component {
                       display: true,
                       modalText:"Error: Pin Could Not Be Updated!"
                 });
+                //clear form
                     document.getElementById("inputName").value = "";
                     document.getElementById("newName").value = "";
                     document.getElementById("newEmail").value = "";
@@ -187,10 +204,9 @@ class editUser extends Component {
                     document.getElementById("newPassword").value = "";
                     document.getElementById("newPin").value = "";
                     document.getElementById("inputAccess").value = "";
-                console.log(this.state.modalText);
                   })
             }
-            console.log("Edits: " + userEdits);
+            //if edits to user, submit request
             if(userEdits !== "") {
                 userChange = JSON.parse(userEdits);
                 console.log(userChange);
@@ -208,6 +224,7 @@ class editUser extends Component {
                         display: true,
                         modalText:"User Successfully Updated!"
                   });
+                  //clear forms
                     document.getElementById("inputName").value = "";
                     document.getElementById("newName").value = "";
                     document.getElementById("newEmail").value = "";
@@ -224,6 +241,7 @@ class editUser extends Component {
                       display: true,
                       modalText:"Error: User Could Not Be Updated!"
                 });
+                //clear form
                     document.getElementById("inputName").value = "";
                     document.getElementById("newName").value = "";
                     document.getElementById("newEmail").value = "";
@@ -253,6 +271,7 @@ class editUser extends Component {
   
       render() {
           return (
+            //render Modal
               <div class="add-user-component">
                 <Modal show={this.state.display} onHide={this.handleClose}>
                         <Modal.Header closeButton>
@@ -265,6 +284,7 @@ class editUser extends Component {
                             </Button>
                         </Modal.Footer>
                       </Modal>
+                      //form for user input
                       <form class="text-center" name="user" onSubmit={this.handleSubmit}>
                       <h1 class="h3 mb-3">Edit User</h1>
                           <label for="inputName" class="sr-only">Name</label>
