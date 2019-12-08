@@ -2,11 +2,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-
   var noAvailSchema = new Schema({
     employeeID: String,
-    start: Date, //use moment.js
-    end: Date,
+    start: String, //use moment.js
+    end: String,
 });
 
 /* noAvailSchema.pre('save', function(next, err) {
