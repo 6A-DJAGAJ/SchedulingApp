@@ -9,55 +9,89 @@ Users = require('../models/Users.server.model.js')
 try{
 /*
 
-Possible to include:
-deleteAllByEmployeeID (needs Admin permissions)
+  Preface:
+    Axios is used as a means of communicating between
+    the client and the server
+    - axios uses a parameter called 'data' for when
+    a req.body needs to be sent, same formats
+    - see the routes folder for on whether axios needs
+    to use a GET/POST/DELETE etc.
+
+    ex. 
+      axios({
+        method:'post',
+        url:'/uAvail/create',
+        data:{
+          'employeeID': (string),
+          'start': (moment||Date),
+          'end': (moment||Date)
+        }
+      })
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
 
-Working:
-
-create noAvail
-  - creates on sending info to req.body
-  ex. localhost:5000/uNoAvail/create/
-  req.body = {
-    employeeID: (string)
-    start: (moment||Date)
-    end: (moment||Date)
-  }
-
-listBy... year/month/week/day
-  ex. localhost:5000/uNoAvail/month/
-  //to keep consistency, using body
-  req.body = {
-    employeeID: (string)
-    dayRange: moment().subtract(1,'month').format()
-  }
 
 
-updateAvail (high priority)
-  - must be able to update ID, start, and end
-  - uses req.body to make new doc
-  ex. localhost:5000/uNoAvail/update/
-  req.body = {
-    _id: (string)
-    employeeID: (string)
-    start: (moment||Date)
-    end: (moment||Date)
-  }
 
-delete (high priority)
-  - deletes by uniqueID from req.body
-  ex. localhost:5000/uNoAvail/delete/
-  // must set axios to delete
-  req.body = {
-    _id: (string)
-  }
+  Working Functions:
 
-Future implementations:
+    create avail
+      - creates on sending info to req.body
+      ex. /uAvail/create/
+      data = {
+        'employeeID': (string),
+        'start': (moment||Date),
+        'end': (moment||Date)
+      }
 
-listBy... where it takes another parameter to give a
-specified month/week/day
+    
+    updateAvail
+      - must be able to update ID, start, and end
+      - uses req.body to make new doc
+      ex. /uAvail/update/
+      data = {
+        '_id': (string),
+        'employeeID': (string),
+        'start': (moment||Date),
+        'end': (moment||Date)
+      }
+
+
+    listBy... year/month/week/day
+          ex. /uAvail/month/
+          data = {
+            'employeeID': (string),
+            'dayRange': moment().subtract(1,'month').format()
+          }
+        // takes parameter dayRange to give a specific month/week/day
+
+
+    delete
+      - deletes by uniqueID from req.body
+      ex. /uAvail/delete/
+      // must set axios to delete
+      data = {
+        '_id': (string)
+      }
+
+  Future implementations:
+
+    connection between pin controller and availability 
+    to only allow clockIns when the user has an availability scheduled
+
+    not allow edits to unavailability today or the days before
+
+    not allow edits to other user's unavailability
+
+    deleteAllByEmployeeID (needs Admin permissions)
 
 */
+
 
 
 
@@ -68,11 +102,11 @@ exports.create = function(req, res) {
   var noAvail = new uNoAvail(req.body);
   
   /* Must be in form
-    {
-      employeeID: (String)
-      start: (date)
-      end: (date)
-    }
+    data = {
+        'employeeID': (string),
+        'start': (moment||Date),
+        'end': (moment||Date)
+      }
    */
   //should not have to worry about start/end not existing
   // due to user error
@@ -97,19 +131,22 @@ exports.create = function(req, res) {
     }
   });
 }
+
 exports.updateAvail = function(req,res){
   var noAvail = new uNoAvail(req.body);
   /* Must be in form
-    {
-      _id: (String [gets changed to Object])
-      employeeID: (String)
-      start: (date)
-      end: (date)
-    }
+    data = {
+        '_id': (string),
+        'employeeID': (string),
+        'start': (moment||Date),
+        'end': (moment||Date)
+      }
    */
   // check to see if valid user
-    Users.findOne({employeeID:noAvail.employeeID},
-      function(err,user){
+  // To Implement:
+  // should check if the current employee has the correct permissions
+  Users.findOne({employeeID:noAvail.employeeID},
+    function(err,user){
       if (err) {res.json(err)}
       else if (user !== undefined){
         uNoAvail.findOneAndUpdate({_id:noAvail._id},
@@ -130,14 +167,15 @@ exports.updateAvail = function(req,res){
 }
 
 exports.listBy = function(req, res) {
-  /* a url to this would look like (without parenthesis)
-   localhost:5000/uNoAvail/month/
-  req.body = {
-    employeeID: (string)
-    dayRange: moment().subtract(1,'month')
-  } */
+  /* a url to this would look like 
+    POST with axios setting data to send as req.body
+
+    data = {
+      'employeeID': (string),
+      'dayRange': moment().subtract(1,'month').format()
+    }
+  */
   
-  //Need to take all 
   var start;
   var end;
   //first check if the employeeID exists in database
@@ -145,10 +183,12 @@ exports.listBy = function(req, res) {
      function(err,user){
       if (err) {res.json(err)}
       else if (user !== undefined){
+        //check for valid zoom (DayPilot scheduler) paramaters in url
         if (req.params.listBy === 'year' 
         || req.params.listBy === 'month' 
         || req.params.listBy === 'week'
         || req.params.listBy === 'day'){
+          // use dayRange to find the start and end times of the zoom
           if (req.body.dayRange !== null){
             start = moment(req.body.dayRange)
               .startOf(req.params.listBy).format();
@@ -158,6 +198,7 @@ exports.listBy = function(req, res) {
             //console.log(new Date('2019-10-12'));
           }
           else {
+            // if a valid date is not found, just send the current month/week/day
             start = moment().startOf(req.params.listBy).format();
             end = moment().endOf(req.params.listBy).format();
           }
@@ -187,7 +228,12 @@ exports.listBy = function(req, res) {
 };
 
 exports.deleteAvail = function(req, res){
-  // receives a value in the req.body of an ID to delete
+  /* receives a value in the req.body of an ID to delete
+    data = {
+      '_id': (string)
+    }
+  */
+  // needs to check auth of current user and if the dates are now or earlier
 
   //checks to see if entry with matching _id exists
   uNoAvail.findById({_id:req.body._id},

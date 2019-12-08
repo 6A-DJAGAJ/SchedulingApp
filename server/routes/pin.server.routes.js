@@ -10,16 +10,19 @@ const uPins = require('../controllers/pin.server.controller'),
   localhost:3000/clockIn/3737
 */
 
-router.route('/list')
-  .get(uPins.list)
+//Dangerous to leave way to get pins like this
+//router.route('/list').get(uPins.list)
 
+//takes a req.body of an _id to delete
 router.route('/delete/')
   .delete(uPins.delete)
 
+//did not need read functions
+
 router.route('/clockIn/:pinNumIn')
-  .get(uPins.read);
+  .get(uPins.clockIn);
 router.route('/clockOut/:pinNumOut')
-  .get(uPins.read);
+  .get(uPins.clockOut);
 
 
 //paramaters are sent to the exported functions

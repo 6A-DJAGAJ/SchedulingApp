@@ -39,9 +39,9 @@ const mongoose = require('mongoose'),
   // 911 = there was an error
   //############################################//
 
-  calling clockIn or Out
-  localhost:3000/uPins/clockIn/(pinNum)
-  localhost:3000/uPins/clockOut/(pinNum)
+  calling clockIn or Out:
+  /uPins/clockIn/(pinNum)
+  /uPins/clockOut/(pinNum)
 */
 
 
@@ -64,22 +64,13 @@ try{
     });
   };
 
-  //list all by _id
+  //list all by _id, disabled from routing (uncomment to enable)
   exports.list = function(req, res) {
     uPins.find({}, null, null, function (err, pins) {
       if (err) return console.error(err);
       console.log("calling all pins" + pins);
       res.send(pins);
     }).sort('_id');
-  };
-
-  exports.read = function(req,res){
-    if (req.params.pinNumIn !== null){
-      res.json(req.params.pinNumIn)
-    }
-    else if (req.params.pinNumOut !== null){
-      res.json(req.params.pinNumOut)
-    }
   };
 
   //delete entry w/ req.body._id
