@@ -271,7 +271,6 @@ class editUser extends Component {
   
       render() {
           return (
-            //render Modal
               <div class="add-user-component">
                 <Modal show={this.state.display} onHide={this.handleClose}>
                         <Modal.Header closeButton>
@@ -284,7 +283,6 @@ class editUser extends Component {
                             </Button>
                         </Modal.Footer>
                       </Modal>
-                      //form for user input
                       <form class="text-center" name="user" onSubmit={this.handleSubmit}>
                       <h1 class="h3 mb-3">Edit User</h1>
                           <label for="inputName" class="sr-only">Name</label>
