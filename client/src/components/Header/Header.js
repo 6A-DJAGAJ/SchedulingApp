@@ -25,7 +25,7 @@ class Header extends React.Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                    <Nav.Link href="#dash" className="nav-colors" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
+                    <Nav.Link href="#dash" className="nav-colors" id="navDash" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
                     <Nav.Link href="#schedule" className="nav-colors" onClick={() => this.updatePage('schedule')}>Schedule</Nav.Link>
                     <Nav.Link href="#timeclock" className="nav-colors" onClick={() => this.updatePage('timeclock')}>Timeclock</Nav.Link>
                     </Nav>
@@ -43,7 +43,7 @@ class Header extends React.Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                    <Nav.Link href="#dash" className="nav-colors" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
+                    <Nav.Link href="#dash" className="nav-colors" id="navDash" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
                     <Nav.Link href="#schedule" className="nav-colors" onClick={() => this.updatePage('schedule')}>Schedule</Nav.Link>
                     <Nav.Link href="#timeclock" className="nav-colors" onClick={() => this.updatePage('timeclock')}>Timeclock</Nav.Link>
                     <Nav.Link href="#addUsers" className="nav-colors" onClick={() => this.updatePage('addUsers')}>Add User</Nav.Link>
@@ -62,9 +62,11 @@ class Header extends React.Component {
                 <Navbar.Brand style={{color:"white"}}>SchedulingApp</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
+                    <div id="navDash" onClick={() => this.updatePage('dash')}>
                     <Nav className="mr-auto">
                     <Nav.Link href="#dash" className="nav-colors" onClick={() => this.updatePage('dash')}>Dashboard</Nav.Link>
                     </Nav>
+                    </div>
                 </Navbar.Collapse>
                 </Navbar>
             </div>
