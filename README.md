@@ -83,8 +83,8 @@ Test for Austin
 (ignore this comment, you never saw this)
 
 ## Sources and Citations
-https://mdbootstrap.com/docs/jquery/tables/generator/
-https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
-https://medium.com/@quynh.totuan/how-to-get-the-current-week-in-javascript-9e64d45a9a08
-https://blog.logrocket.com/react-datepicker-217b4aa840da/
-https://medium.com/@ruthmpardee/passing-data-between-react-components-103ad82ebd17
+### https://mdbootstrap.com/docs/jquery/tables/generator/
+### https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
+### https://medium.com/@quynh.totuan/how-to-get-the-current-week-in-javascript-9e64d45a9a08
+### https://blog.logrocket.com/react-datepicker-217b4aa840da/
+### https://medium.com/@ruthmpardee/passing-data-between-react-components-103ad82ebd17
