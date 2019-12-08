@@ -3,30 +3,36 @@ import NumPad from 'react-numpad';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+/*This component handles the Clockin/Out Page. The actual logic is handled on the 
+server end, so the main responsibilty of this component is to interpret what is returned
+by the server in order to give the user the proper feedback. Currently, the messages are
+created locally using the information received from the server, but if possible it would 
+be preferable to have the messages also created on the server end and then sent to the 
+component for rendering so they can be preserved on refresh*/
 
 class PinInput extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-		fromServer : [],
-		logString: "no logs",
-		messages: [],
-		display : false,
-		modalText: "",
-		curName:""
+		fromServer : [], //the server status response
+		logString: "no logs", //console debug variable 
+		messages: [], //stores the messages printed to the log
+		display : false, //boolean for modal display
+		modalText: "", //the field that will hold the text for the modal passed by the case
+		curName:"" //the first name of the user to display in the modal
 	}
 }
 
 
-	displayRule = value => value.replace(/0|1|2|3|4|5|6|7|8|9/g, '*');
+	displayRule = value => value.replace(/0|1|2|3|4|5|6|7|8|9/g, '*'); //Display rule for React Numpad to convert displayed numbers to *
 
-	clearLog = () => {
+	clearLog = () => { 
 		var messages = this.state.messages;
 		messages.length = 0;
 		this.setState({messages})
 	}
 	
-	OnChange =(value, director) => {
+	OnChange =(value, director) => { //the function called when the numpad's onChange is fired
 		//Status codes:
 		// 0 = nothing has happened yet
 		// 1 = successfully clocked in
@@ -40,7 +46,7 @@ class PinInput extends Component {
 			 var messages = this.state.messages;
 			 var fromServer = this.state.fromServer;
 			 var log;
-			 axios.get('/uPins/' + director + '/' + value)
+			 axios.get('/uPins/' + director + '/' + value) //axios call with format uPin/Clockin( or out)/PinValue
 			.then(res => {
 				const fromServer = res.data;
 				console.log(fromServer.name)
@@ -48,7 +54,7 @@ class PinInput extends Component {
 				var d = new Date();
 				d = d.toLocaleString();
 				console.log(fromServer.name + " " + fromServer.clockedIn + " " + fromServer.status)
-				switch(fromServer.status)
+				switch(fromServer.status) //determine log and modal response via server response codes
 				{
 					case 1:
 						log = `${fromServer.name} clocked in at ${d}`;
@@ -90,11 +96,11 @@ class PinInput extends Component {
 						console.log("911, what's your emergency?")
 					break;
 				}
-				messages.unshift(log);
+				messages.unshift(log); //puts newest message at the front
 				this.setState({messages});
 			})
 		 }
-	PrintList = () => {
+	PrintList = () => { //method for printing the log with proper formatting
 		const ul={
 			 listStyleType: 'none',
 			 paddingLeft:'0',
@@ -111,7 +117,7 @@ class PinInput extends Component {
 			)
 	}
 	
-	handleClose = () => {
+	handleClose = () => { // for closing the modal
 		var display = this.state.display
 			display = false;
 			this.setState({display})
@@ -123,7 +129,7 @@ class PinInput extends Component {
 	render() {
 		console.log(this.state.logString)
 		
-		 
+		 //css formatting
 		 const clockin ={
 			 display: 'inline-block',
 			 marginLeft:'23.5%',
